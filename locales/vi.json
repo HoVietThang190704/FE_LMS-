@@ -1,0 +1,38 @@
+{
+	"nav": {
+		"home": "Trang chủ",
+		"courses": "Khóa học",
+		"grades": "Bảng điểm",
+		"reports": "Báo cáo"
+	},
+	"greeting": {
+		"hello": "Xin chào, {name}!",
+		"welcome": "Chào mừng bạn trở lại với hệ thống học tập"
+	},
+	"stats": {
+		"enrolledCourses": "Môn học đang ký",
+		"pendingAssignments": "Bài tập chưa nộp",
+		"averageGrade": "Điểm trung bình",
+		"learningProgress": "Tiến độ học tập"
+	},
+	"classes": {
+		"title": "Lớp học của tôi",
+		"enterButton": "Vào lớp"
+	},
+	"assignments": {
+		"title": "Bài tập sắp hết hạn",
+		"deadlineLabel": "Hạn"
+	},
+	"notifications": {
+		"title": "Thông báo"
+	},
+	"profile": {
+		"name": "{name}"
+	},
+	"assignmentStatus": {
+		"pending": "Chưa làm",
+		"inProgress": "Đang làm",
+		"completed": "Hoàn thành"
+	}
+}
+

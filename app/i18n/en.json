@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "grades": "Grades",
+    "reports": "Reports"
+  },
+  "greeting": {
+    "hello": "Hello, {name}!",
+    "welcome": "Welcome back to the learning platform"
+  },
+  "stats": {
+    "enrolledCourses": "Enrolled courses",
+    "pendingAssignments": "Pending assignments",
+    "averageGrade": "Average grade",
+    "learningProgress": "Learning progress"
+  },
+  "classes": {
+    "title": "My classes",
+    "enterButton": "Enter class"
+  },
+  "assignments": {
+    "title": "Upcoming assignments",
+    "deadlineLabel": "Due"
+  },
+  "notifications": {
+    "title": "Notifications"
+  },
+  "profile": {
+    "name": "{name}"
+  },
+  "assignmentStatus": {
+    "pending": "Pending",
+    "inProgress": "In progress",
+    "completed": "Completed"
+  }
+}
