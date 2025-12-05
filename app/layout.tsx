@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/header/Navbar';
 
 export const metadata: Metadata = {
   title: 'EduVN - Hệ thống quản lý học tập',
@@ -14,10 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className="antialiased">
-        <Navbar />
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

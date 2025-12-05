@@ -1,0 +1,39 @@
+import { ApiError } from '@/lib/utils/api-utils';
+
+export type BackendFetchOptions = RequestInit & {
+  parseJson?: boolean;
+};
+
+export const backendFetch = async (url: string, options: BackendFetchOptions = {}) => {
+  const { parseJson = false, headers, ...rest } = options;
+  const mergedHeaders = new Headers(headers);
+
+  if (!mergedHeaders.has('Content-Type') && rest.body) {
+    mergedHeaders.set('Content-Type', 'application/json');
+  }
+
+  const response = await fetch(url, {
+    ...rest,
+    headers: mergedHeaders,
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    let message = 'Backend request failed';
+    try {
+      const errorPayload = await response.clone().json();
+      message = errorPayload?.message || message;
+    } catch {
+      // ignore JSON parse errors
+    }
+
+    throw new ApiError(response.status, message);
+  }
+
+  if (parseJson) {
+    const json = await response.json();
+    return { response, data: json } as const;
+  }
+
+  return { response } as const;
+};

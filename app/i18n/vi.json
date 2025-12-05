@@ -5,6 +5,83 @@
     "grades": "Bảng điểm",
     "reports": "Báo cáo"
   },
+  "auth": {
+    "brand": {
+      "name": "EduVN",
+      "tagline": "Hệ thống Quản lý Học tập"
+    },
+    "welcome": {
+      "heading": "Chào mừng!",
+      "description": "Đăng nhập hoặc tạo tài khoản để tiếp tục trải nghiệm học tập."
+    },
+    "tabs": {
+      "login": "Đăng nhập",
+      "register": "Đăng ký"
+    },
+    "fields": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Mật khẩu",
+      "passwordPlaceholder": "••••••••"
+    },
+    "actions": {
+      "remember": "Ghi nhớ đăng nhập",
+      "forgot": "Quên mật khẩu?",
+      "submit": "Đăng nhập",
+      "demoLabel": "Tài khoản demo",
+      "demoAction": "Điền thông tin"
+    },
+    "helper": {
+      "demoHint": "Sử dụng tài khoản mẫu để khám phá nhanh toàn bộ tính năng.",
+      "footer": "© 2025 EduVN. All rights reserved."
+    },
+    "status": {
+      "success": "Đăng nhập thành công! Đang chuyển hướng..."
+    }
+  },
+  "register": {
+    "brand": {
+      "name": "EduVN",
+      "tagline": "Hệ thống Quản lý Học tập"
+    },
+    "welcome": {
+      "heading": "Tạo tài khoản EduVN",
+      "description": "Điền thông tin bên dưới để bắt đầu hành trình học tập."
+    },
+    "tabs": {
+      "login": "Đăng nhập",
+      "register": "Đăng ký"
+    },
+    "fields": {
+      "fullNameLabel": "Họ và tên",
+      "fullNamePlaceholder": "Nguyễn Văn A",
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Mật khẩu",
+      "passwordPlaceholder": "Tạo mật khẩu mạnh",
+      "confirmPasswordLabel": "Xác nhận mật khẩu",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+      "phoneLabel": "Số điện thoại",
+      "phonePlaceholder": "+84 912 345 678"
+    },
+    "actions": {
+      "submit": "Tạo tài khoản",
+      "haveAccount": "Đã có tài khoản?",
+      "loginCta": "Đăng nhập",
+      "support": "Cần hỗ trợ?",
+      "terms": "Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật."
+    },
+    "status": {
+      "success": "Tạo tài khoản thành công! Đang chuyển hướng...",
+      "passwordMismatch": "Mật khẩu nhập lại không khớp.",
+      "termsRequired": "Vui lòng chấp nhận điều khoản để tiếp tục.",
+      "missingFields": "Vui lòng điền đầy đủ thông tin bắt buộc.",
+      "genericError": "Đăng ký thất bại, vui lòng thử lại."
+    },
+    "helper": {
+      "footnote": "Chúng tôi chỉ sử dụng thông tin của bạn để đồng bộ tiến trình học tập."
+    }
+  },
   "greeting": {
     "hello": "Xin chào, {name}!",
     "welcome": "Chào mừng bạn trở lại với hệ thống học tập"
