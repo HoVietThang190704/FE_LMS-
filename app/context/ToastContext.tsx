@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useCallback, useRef, useState } from 'react';
+import { TIMING } from '@/lib/shared/constants/timing';
 
 export type ToastType = 'success' | 'error';
 
@@ -35,25 +36,21 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const showToast = useCallback((type: ToastType, message: string) => {
-    // Clear previous timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    // Show new toast
     setToast({
       type,
       message,
       isVisible: true,
     });
 
-    // Auto-dismiss after 3 seconds
     timeoutRef.current = setTimeout(() => {
       hideToast();
-    }, 3000);
+    }, TIMING.TOAST_DISMISS);
   }, [hideToast]);
 
-  // Cleanup on unmount
   React.useEffect(() => {
     return () => {
       if (timeoutRef.current) {

@@ -33,10 +33,6 @@ export default function ToastDemo() {
           Error Toast
         </button>
       </div>
-
-      <p className="text-sm text-gray-600">
-        Nhấn các nút trên để xem Toast tự động biến mất sau 3 giây
-      </p>
     </div>
   );
 }
