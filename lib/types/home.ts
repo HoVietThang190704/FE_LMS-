@@ -24,6 +24,10 @@ export type Assignment = {
   status: 'pending' | 'in-progress' | 'completed';
 };
 
+export type UserProfile = {
+  name: string;
+};
+
 export type Notification = {
   id: number;
   title: string;

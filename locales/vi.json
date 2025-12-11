@@ -17,7 +17,8 @@
 	},
 	"classes": {
 		"title": "Lớp học của tôi",
-		"enterButton": "Vào lớp"
+		"enterButton": "Vào lớp",
+		"lessonUnit": "bài học"
 	},
 	"assignments": {
 		"title": "Bài tập sắp hết hạn",

@@ -1,11 +1,17 @@
-export const mockStats = {
+import type { Assignment, Course, Notification, Stats, UserProfile } from '@/lib/types/home';
+
+export const mockStats: Stats = {
   enrolledCourses: 3,
   pendingAssignments: 2,
   averageGrade: '8.5/10',
   learningProgress: 65,
 };
 
-export const mockClasses = [
+export const mockUserProfile: UserProfile = {
+  name: 'Nguyễn Văn A',
+};
+
+export const mockClasses: Course[] = [
   {
     id: 1,
     courseCode: 'IT4409',
@@ -38,7 +44,7 @@ export const mockClasses = [
   },
 ];
 
-export const mockAssignments = [
+export const mockAssignments: Assignment[] = [
   {
     id: 1,
     title: 'Bài tập lớn: Xây dựng website Portfolio',
@@ -62,7 +68,7 @@ export const mockAssignments = [
   },
 ];
 
-export const mockNotifications = [
+export const mockNotifications: Notification[] = [
   {
     id: 1,
     title: 'Bài giảng mới đã được đăng tải',
