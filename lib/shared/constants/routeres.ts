@@ -1,0 +1,33 @@
+export const ROUTES = {
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  SUPPORT: '/support',
+  ABOUT: '/about',
+  PRIVACY_POLICY: '/privacy-policy',
+  MY_PROFILE: '/my-profile',
+  USER_TARGET_PROFILE: '/user-target-profile',
+  CREATE_PROFILE: '/create-profile',
+  CREATE_AVATAR: '/create-avatar',
+  CREATE_CONTACT: '/create-contact',
+  SETTINGS: '/settings',
+  SETTINGS_PROFILE: '/settings/profile',
+  SETTINGS_LANGUAGE: '/settings/language',
+  SETTINGS_USER_PLATFORMS: '/settings/user-platforms',
+  SEARCH: '/search',
+  CHANGE_PASSWORD: '/settings/change-password',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
+  NOTIFICATIONS: '/notifications',
+  ONBOARDING: '/onboarding',
+  CATEGORY_CHILDREN: '/categories',
+  CATEGORY: '/category',
+  MY_PRODUCTS: '/my-products',
+  MY_DASHBOARD: '/my-dashboard',
+  COURSES: '/courses',
+  COURSE_DETAIL: (id: string) => `/courses/${id}`,
+  GRADES: '/grades',
+  REPORTS: '/reports'
+} as const;
+
+export type RoutesMap = typeof ROUTES;

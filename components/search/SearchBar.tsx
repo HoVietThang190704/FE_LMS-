@@ -56,7 +56,7 @@ const SearchBar = ({
 
   return (
     <div className={`relative w-full ${className}`}>
-      <div className={`flex items-center gap-3 px-4 py-3 bg-white rounded-lg border-2 transition-all duration-200 ${containerClasses}`}>
+      <div className={`flex items-center gap-3 px-4 py-3 bg-grayLine rounded-lg border-2 transition-all duration-200 ${containerClasses}`}>
         <Search size={20} className={`flex-shrink-0 transition-colors ${iconColor}`} />
 
         <input

@@ -15,6 +15,7 @@ export const mockClasses = [
     schedule: 'Thứ 3, 7:00 - 9:00',
     room: 'Phòng TC-205',
     lessonProgress: '16/24',
+    image: 'test1.jpg',
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ export const mockClasses = [
     schedule: 'Thứ 5, 13:00 - 15:00',
     room: 'Phòng D3-301',
     lessonProgress: '13/30',
+    image: 'test2.jpg',
   },
   {
     id: 3,
@@ -35,6 +37,7 @@ export const mockClasses = [
     schedule: 'Thứ 6, 9:00 - 11:00',
     room: 'Phòng D9-201',
     lessonProgress: '22/25',
+    image: 'test3.jpg',
   },
 ];
 
