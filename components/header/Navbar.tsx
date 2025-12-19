@@ -4,13 +4,14 @@ import { BookOpen, Home, Award, BarChart3, User } from 'lucide-react';
 import Link from 'next/link';
 import { IMAGES } from '@/lib/shared/constants/images';
 import { LOGO_SIZE, ICON_L, ICON_XXXL } from '@/lib/shared/constants/size';
+import { ROUTES } from '@/lib/shared/constants/routeres';
 
 export default function Navbar() {
   const navItems = [
-    { label: 'Trang chủ', icon: Home, href: '/', active: true },
-    { label: 'Khóa học', icon: BookOpen, href: '/courses', active: false },
-    { label: 'Bảng điểm', icon: Award, href: '/grades', active: false },
-    { label: 'Báo cáo', icon: BarChart3, href: '/reports', active: false },
+    { label: 'Trang chủ', icon: Home, href: ROUTES.HOME, active: true },
+    { label: 'Khóa học', icon: BookOpen, href: ROUTES.COURSES, active: false },
+    { label: 'Bảng điểm', icon: Award, href: ROUTES.GRADES, active: false },
+    { label: 'Báo cáo', icon: BarChart3, href: ROUTES.REPORTS, active: false },
   ];
 
   return (
