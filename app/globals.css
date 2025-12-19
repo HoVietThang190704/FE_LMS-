@@ -10,7 +10,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-gray-line: #f3f4f6;
 }
+
+.bg-grayLine { background-color: var(--color-gray-line); }
 
 @media (prefers-color-scheme: dark) {
   :root {
