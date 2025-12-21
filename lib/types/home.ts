@@ -5,8 +5,8 @@ export type Stats = {
   learningProgress: number;
 };
 
-export type Course = {
-  id: number;
+export type HomeClass = {
+  id: string;
   courseCode: string;
   courseName: string;
   instructor: string;
@@ -17,7 +17,7 @@ export type Course = {
 };
 
 export type Assignment = {
-  id: number;
+  id: string;
   title: string;
   courseCode: string;
   deadline: string;
@@ -29,7 +29,7 @@ export type UserProfile = {
 };
 
 export type Notification = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   time: string;

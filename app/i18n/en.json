@@ -25,7 +25,11 @@
     "deadlineLabel": "Due"
   },
   "notifications": {
-    "title": "Notifications"
+    "title": "Notifications",
+    "open": "Open notifications"
+  },
+  "actions": {
+    "viewCourses": "View courses"
   },
   "profile": {
     "name": "{name}"
@@ -34,5 +38,10 @@
     "pending": "Pending",
     "inProgress": "In progress",
     "completed": "Completed"
+  },
+  "publicCourses": {
+    "title": "Featured courses",
+    "subtitle": "Showing {count} open courses for you",
+    "empty": "No featured courses are available right now."
   }
 }

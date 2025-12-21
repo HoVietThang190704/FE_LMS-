@@ -25,7 +25,11 @@
     "deadlineLabel": "Hạn"
   },
   "notifications": {
-    "title": "Thông báo"
+    "title": "Thông báo",
+    "open": "Mở thông báo"
+  },
+  "actions": {
+    "viewCourses": "Xem khóa học"
   },
   "profile": {
     "name": "{name}"
@@ -34,5 +38,10 @@
     "pending": "Chưa làm",
     "inProgress": "Đang làm",
     "completed": "Hoàn thành"
+  },
+  "publicCourses": {
+    "title": "Khóa học nổi bật",
+    "subtitle": "Hiển thị {count} khóa học đang mở dành cho bạn",
+    "empty": "Hiện chưa có khóa học nổi bật nào."
   }
 }
