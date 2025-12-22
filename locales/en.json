@@ -34,6 +34,46 @@
 		"pending": "Pending",
 		"inProgress": "In progress",
 		"completed": "Completed"
+	},
+	"courseDetail": {
+		"backToHome": "Back to home",
+		"description": "Course description",
+		"credits": "Credits",
+		"instructor": "Instructor",
+		"schedule": "Schedule",
+		"room": "Room",
+		"enrollment": "Enrollment",
+		"tags": "Tags",
+		"enterClass": "Enter class",
+		"quickInfo": "Quick info",
+		"code": "Course code",
+		"status": "Status",
+		"active": "Active",
+		"archived": "Archived",
+		"share": "Share",
+		"enrolled": "Enrolled",
+		"seats": "Seats available",
+		"enroll": "Enroll now",
+		"full": "Full",
+		"overview": "Overview",
+		"syllabus": "Syllabus",
+		"duration": "Duration",
+		"creditsShort": "cr",
+		"learningObjectives": "Learning objectives",
+		"learningObjectivesItem1": "Understand basic concepts",
+		"learningObjectivesItem2": "Apply practical examples",
+		"learningObjectivesItem3": "Build a small project",
+		"noData": "No information available",
+		"refundPolicy": "Refund policy info",
+		"seats": "Seats"
+	},
+	"courseCard": {
+		"registered": "Registered",
+		"available": "Open for enrollment",
+		"creditsShort": "cr",
+		"students": "students",
+		"enter": "Enter class",
+		"noInstructor": "No instructor"
 	}
 }
 

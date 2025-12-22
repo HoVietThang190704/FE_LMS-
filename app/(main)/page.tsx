@@ -48,6 +48,7 @@ export default async function HomePage() {
     <HomeUI
       locale={locale}
       t={t}
+      messages={messages}
       user={user}
       stats={stats}
       classes={classes}

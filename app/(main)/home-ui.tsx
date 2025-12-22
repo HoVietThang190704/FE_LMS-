@@ -13,6 +13,7 @@ import { ROUTES } from '@/lib/shared/constants/routeres';
 type HomeUIProps = {
   locale: 'en' | 'vi';
   t: TranslateFn;
+  messages: Record<string, unknown>;
   user: UserProfile;
   stats: Stats;
   classes: HomeClass[];
@@ -21,7 +22,7 @@ type HomeUIProps = {
   courses: Course[];
 };
 
-export default function HomeUI({ locale, t, user, stats, classes, assignments, notifications, courses }: HomeUIProps) {
+export default function HomeUI({ locale, t, messages, user, stats, classes, assignments, notifications, courses }: HomeUIProps) {
   return (
     <div className="min-h-screen bg-gray-50" data-locale={locale}>
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -47,6 +48,8 @@ export default function HomeUI({ locale, t, user, stats, classes, assignments, n
                 <CourseCard
                   key={course.id}
                   course={course}
+                  messages={messages}
+                  locale={locale}
                   enrolled={(course.tags || []).includes('enrolled')}
                 />
               ))}
