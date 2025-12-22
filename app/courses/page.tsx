@@ -1,7 +1,6 @@
 import React from 'react';
 import CoursesPageClient from './CoursesPageClient';
 import { getPublicCourses } from '@/lib/services/courses/service';
-import { mockClasses } from '@/lib/mocks/homeData';
 
 export default async function CoursesPage() {
   // server-side fetch initial courses — try backend public API first, fallback to mocks

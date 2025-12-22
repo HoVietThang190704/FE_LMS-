@@ -17,7 +17,8 @@
 	},
 	"classes": {
 		"title": "My classes",
-		"enterButton": "Enter class"
+		"enterButton": "Enter class",
+		"lessonUnit": "lessons"
 	},
 	"assignments": {
 		"title": "Upcoming assignments",

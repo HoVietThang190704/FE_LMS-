@@ -18,13 +18,16 @@ export default function CourseCard({ course, enrolled = false }: Props) {
   const enrolledCount = course.enrolled ?? 0;
   const capacity = course.capacity ?? 60;
 
-  const imageSrc = (course as { image?: string }).image
-    ? `/images/demo/${(course as { image?: string }).image}`
+  const rawImage = course.image?.trim();
+  const imageSrc = rawImage
+    ? rawImage.startsWith('http') || rawImage.startsWith('/')
+      ? rawImage
+      : `/images/demo/${rawImage}`
     : `/images/demo/default.svg`;
 
   return (
-    <article className="bg-white rounded-3xl border border-gray-200 hover:shadow-md transition-shadow overflow-hidden">
-      <div className="relative h-40 w-full bg-gray-100">
+    <article className="bg-white rounded-3xl gap-4 border border-gray-200 hover:shadow-md transition-shadow overflow-hidden">
+      <div className="relative h-44 w-full bg-gray-100">
         <Image
           src={imageSrc}
           alt={course.name}
@@ -45,7 +48,7 @@ export default function CourseCard({ course, enrolled = false }: Props) {
         </span>
       </div>
 
-      <div className="p-5 flex flex-col justify-between h-[220px]">
+      <div className="p-5 flex flex-col justify-between min-h-[260px]">
         <div>
           <h3 className="text-gray-900 font-semibold text-base mb-1">{course.name}</h3>
           {course.description && <p className="text-gray-600 text-sm mb-3">{course.description}</p>}
