@@ -53,15 +53,10 @@ export default function CourseCard({ course, enrolled = false, messages = {}, lo
           </span>
         </div>
 
-        <div className="p-5 flex flex-col justify-between min-h-[260px]">
+        <div className="p-5 flex flex-col justify-between min-h-[220px]">
           <div>
-            <h3 className="text-gray-900 font-semibold text-base mb-1">{course.name}</h3>
-            {course.description && <p className="text-gray-600 text-sm mb-3">{course.description}</p>}
-
-      <div className="p-5 flex flex-col justify-between min-h-[220px]">
-        <div>
-          <h3 className="text-gray-900 font-semibold text-base mb-1 break-words">{course.name}</h3>
-          {course.description && <p className="text-gray-600 text-sm mb-3 break-words">{course.description}</p>}
+            <h3 className="text-gray-900 font-semibold text-base mb-1 break-words">{course.name}</h3>
+            {course.description && <p className="text-gray-600 text-sm mb-3 break-words">{course.description}</p>}
 
           <p className="text-gray-600 text-sm mb-2 break-words">{instructor}</p>
 
@@ -77,7 +72,6 @@ export default function CourseCard({ course, enrolled = false, messages = {}, lo
               <span>{enrolledCount}/{capacity} {t('courseCard.students','sinh viên')}</span>
               </div>
             </div>
-          </div>
 
           <div className="mt-4">
             <div className="block text-center bg-black text-white rounded-md py-2">
