@@ -5,11 +5,16 @@ import vi from './vi.json';
 
 export const messages: Record<'en' | 'vi', Record<string, unknown>> = {
   en,
-  vi,
-};
+  vi
+} as const;
 
-export function getMessages(locale: 'en' | 'vi') {
+export type SupportedLocale = keyof typeof messages;
+
+export const DEFAULT_LOCALE: SupportedLocale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE === 'en' ? 'en' : 'vi';
+
+export function getMessages(locale: SupportedLocale = DEFAULT_LOCALE) {
   return messages[locale] || en;
 }
 
-export default { messages, getMessages };
+const i18n = { messages, getMessages, DEFAULT_LOCALE };
+export default i18n;

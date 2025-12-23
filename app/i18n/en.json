@@ -5,6 +5,83 @@
     "grades": "Grades",
     "reports": "Reports"
   },
+  "auth": {
+    "brand": {
+      "name": "EduVN",
+      "tagline": "Learning Management System"
+    },
+    "welcome": {
+      "heading": "Welcome!",
+      "description": "Sign in or create an account to keep learning."
+    },
+    "tabs": {
+      "login": "Sign in",
+      "register": "Sign up"
+    },
+    "fields": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••"
+    },
+    "actions": {
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "demoLabel": "Demo account",
+      "demoAction": "Fill credentials"
+    },
+    "helper": {
+      "demoHint": "Use the sample account to explore faster.",
+      "footer": "© 2025 EduVN. All rights reserved."
+    },
+    "status": {
+      "success": "Signed in successfully! Redirecting..."
+    }
+  },
+  "register": {
+    "brand": {
+      "name": "EduVN",
+      "tagline": "Learning Management System"
+    },
+    "welcome": {
+      "heading": "Create your EduVN account",
+      "description": "Complete the form below to start learning with us."
+    },
+    "tabs": {
+      "login": "Sign in",
+      "register": "Sign up"
+    },
+    "fields": {
+      "fullNameLabel": "Full name",
+      "fullNamePlaceholder": "Nguyen Van A",
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a strong password",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "+84 912 345 678"
+    },
+    "actions": {
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "loginCta": "Sign in",
+      "support": "Need help?",
+      "terms": "I agree to the Terms of Service and Privacy Policy."
+    },
+    "status": {
+      "success": "Account created successfully! Redirecting...",
+      "passwordMismatch": "Passwords do not match.",
+      "termsRequired": "Please accept the terms to continue.",
+      "missingFields": "Please fill out all required information.",
+      "genericError": "Registration failed. Please try again."
+    },
+    "helper": {
+      "footnote": "We will only use your contact information to keep your learning progress in sync."
+    }
+  },
   "greeting": {
     "hello": "Hello, {name}!",
     "welcome": "Welcome back to the learning platform"
