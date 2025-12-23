@@ -45,12 +45,12 @@ export default function CourseCard({ course, enrolled = false }: Props) {
         </span>
       </div>
 
-      <div className="p-5 flex flex-col justify-between h-[220px]">
+      <div className="p-5 flex flex-col justify-between min-h-[220px]">
         <div>
-          <h3 className="text-gray-900 font-semibold text-base mb-1">{course.name}</h3>
-          {course.description && <p className="text-gray-600 text-sm mb-3">{course.description}</p>}
+          <h3 className="text-gray-900 font-semibold text-base mb-1 break-words">{course.name}</h3>
+          {course.description && <p className="text-gray-600 text-sm mb-3 break-words">{course.description}</p>}
 
-          <p className="text-gray-600 text-sm mb-2">{instructor}</p>
+          <p className="text-gray-600 text-sm mb-2 break-words">{instructor}</p>
 
           <div className="space-y-2 text-sm text-gray-600">
             {schedule && (
