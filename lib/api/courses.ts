@@ -1,3 +1,7 @@
+import { fetchFromApi, buildApiUrl } from '@/lib/shared/utils/api';
+
+export type SyllabusItem = { title: string; description?: string };
+
 export type Course = {
   id: string;
   code: string;
@@ -12,6 +16,7 @@ export type Course = {
   enrolled?: number;
   capacity?: number;
   image?: string;
+  syllabus?: SyllabusItem[];
 };
 
 export type CoursesResponse = {
@@ -19,10 +24,8 @@ export type CoursesResponse = {
   meta?: { total: number; page: number; limit: number; totalPages: number };
 };
 
-const DEFAULT_API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
-
 export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): Promise<CoursesResponse> {
-  const url = `${DEFAULT_API_BASE}/api/courses?page=${page}&limit=${limit}${keyword ? `&keyword=${encodeURIComponent(keyword)}` : ''}`;
+  const url = buildApiUrl(`/api/courses/public?page=${page}&limit=${limit}${keyword ? `&keyword=${encodeURIComponent(keyword)}` : ''}`);
 
   try {
     const res = await fetch(url, { cache: 'no-store', credentials: 'include' });
@@ -31,7 +34,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
     const body = await res.json();
 
     // Backend uses { data, meta }
-    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived' };
+    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; image?: string; createdAt?: string; updatedAt?: string };
     return {
       data: (body.data || []).map((c: RawCourse) => ({
         id: c._id || c.id || String(c.code || ''),
@@ -40,6 +43,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
         description: c.description,
         tags: c.tags,
         status: c.status,
+        image: c.image,
       })),
 
       meta: body.meta,
@@ -48,5 +52,32 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
     // Fallback to empty list on error — caller can decide to use local mocks if desired
     console.warn('[getCourses] fetch failed, returning empty array', err);
     return { data: [] };
+  }
+}
+
+export async function getPublicCourseById(id: string): Promise<Course | null> {
+  try {
+    const response = await fetchFromApi<{ _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; image?: string; createdAt?: string; updatedAt?: string }>(`/api/courses/public/${id}`);
+    const c = response;
+
+    return {
+      id: c._id || c.id || String(c.code || ''),
+      code: c.code || '',
+      name: c.name || '',
+      description: c.description,
+      tags: c.tags,
+      status: c.status,
+      image: c.image,
+      credits: c.credits,
+      instructor: c.instructor,
+      schedule: c.schedule,
+      room: c.room,
+      enrolled: c.enrolled,
+      capacity: c.capacity,
+      syllabus: c.syllabus,
+    };
+  } catch (err) {
+    console.warn('[getPublicCourseById] fetch failed', err);
+    return null;
   }
 }

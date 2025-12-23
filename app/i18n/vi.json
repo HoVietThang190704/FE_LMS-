@@ -17,14 +17,19 @@
   },
   "classes": {
     "title": "Lớp học của tôi",
-    "enterButton": "Vào lớp"
+    "enterButton": "Vào lớp",
+    "lessonUnit": "bài học"
   },
   "assignments": {
     "title": "Bài tập sắp hết hạn",
     "deadlineLabel": "Hạn"
   },
   "notifications": {
-    "title": "Thông báo"
+    "title": "Thông báo",
+    "open": "Mở thông báo"
+  },
+  "actions": {
+    "viewCourses": "Xem khóa học"
   },
   "profile": {
     "name": "{name}"
@@ -33,5 +38,54 @@
     "pending": "Chưa làm",
     "inProgress": "Đang làm",
     "completed": "Hoàn thành"
+  },
+  "publicCourses": {
+    "title": "Khóa học nổi bật",
+    "subtitle": "Hiển thị {count} khóa học đang mở dành cho bạn",
+    "empty": "Hiện chưa có khóa học nổi bật nào."
+  },
+  "courseDetail": {
+    "backToHome": "Quay lại trang chủ",
+    "description": "Mô tả khóa học",
+    "credits": "Tín chỉ",
+    "instructor": "Giảng viên",
+    "instructorBioShort": "Tiểu sử giảng viên chưa có",
+    "schedule": "Lịch học",
+    "room": "Phòng học",
+    "enrollment": "Sĩ số",
+    "tags": "Thẻ",
+    "enterClass": "Vào lớp học",
+    "quickInfo": "Thông tin nhanh",
+    "code": "Mã môn",
+    "status": "Trạng thái",
+    "active": "Đang hoạt động",
+    "archived": "Đã lưu trữ",
+    "share": "Chia sẻ",
+    "enrolled": "Đã đăng ký",
+    "seats": "Số ghế trống",
+    "enroll": "Đăng ký ngay",
+    "full": "Đầy",
+    "overview": "Tổng quan",
+    "syllabus": "Nội dung khóa học",
+    "duration": "Thời lượng",
+    "creditsShort": "tc",
+    "learningObjectives": "Mục tiêu học tập",
+    "learningObjectivesItem1": "Hiểu các khái niệm cơ bản",
+    "learningObjectivesItem2": "Áp dụng ví dụ thực tế",
+    "learningObjectivesItem3": "Xây dựng dự án nhỏ",
+    "noData": "Chưa có thông tin",
+    "refundPolicy": "Chính sách hoàn tiền",
+    "syllabusItem1": "Giới thiệu & Cài đặt",
+    "syllabusItem1Desc": "Tổng quan khóa học và cài đặt môi trường",
+    "syllabusItem2": "Chủ đề chính",
+    "syllabusItem2Desc": "Các chủ đề chính và bài lab"
+  },
+  "courseCard": {
+    "registered": "Đã đăng ký",
+    "available": "Có thể đăng ký",
+    "creditsShort": "tc",
+    "students": "sinh viên",
+    "enter": "Vào lớp học",
+    "noInstructor": "Chưa cập nhật"
   }
 }

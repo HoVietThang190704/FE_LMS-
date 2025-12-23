@@ -9,6 +9,8 @@ interface ClassCardProps {
   schedule: string;
   room: string;
   lessonProgress: string;
+  lessonLabel: string;
+  enterLabel: string;
 }
 
 export default function ClassCard({
@@ -19,6 +21,8 @@ export default function ClassCard({
   schedule,
   room,
   lessonProgress,
+  lessonLabel,
+  enterLabel,
 }: ClassCardProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow">
@@ -53,9 +57,9 @@ export default function ClassCard({
         </div>
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-600">{lessonProgress} bài học</span>
+        <span className="text-sm text-gray-600">{lessonProgress} {lessonLabel}</span>
         <button className="bg-black text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors">
-          Vào lớp
+          {enterLabel}
         </button>
       </div>
     </div>

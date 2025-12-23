@@ -17,14 +17,19 @@
   },
   "classes": {
     "title": "My classes",
-    "enterButton": "Enter class"
+    "enterButton": "Enter class",
+    "lessonUnit": "lessons"
   },
   "assignments": {
     "title": "Upcoming assignments",
     "deadlineLabel": "Due"
   },
   "notifications": {
-    "title": "Notifications"
+    "title": "Notifications",
+    "open": "Open notifications"
+  },
+  "actions": {
+    "viewCourses": "View courses"
   },
   "profile": {
     "name": "{name}"
@@ -33,5 +38,54 @@
     "pending": "Pending",
     "inProgress": "In progress",
     "completed": "Completed"
+  },
+  "publicCourses": {
+    "title": "Featured courses",
+    "subtitle": "Showing {count} open courses for you",
+    "empty": "No featured courses are available right now."
+  },
+  "courseDetail": {
+    "backToHome": "Back to home",
+    "description": "Course description",
+    "credits": "Credits",
+    "instructor": "Instructor",
+    "instructorBioShort": "Instructor bio not available",
+    "schedule": "Schedule",
+    "room": "Room",
+    "enrollment": "Enrollment",
+    "tags": "Tags",
+    "enterClass": "Enter class",
+    "quickInfo": "Quick info",
+    "code": "Course code",
+    "status": "Status",
+    "active": "Active",
+    "archived": "Archived",
+    "share": "Share",
+    "enrolled": "Enrolled",
+    "seats": "Seats available",
+    "enroll": "Enroll now",
+    "full": "Full",
+    "overview": "Overview",
+    "syllabus": "Syllabus",
+    "duration": "Duration",
+    "creditsShort": "cr",
+    "learningObjectives": "Learning objectives",
+    "learningObjectivesItem1": "Understand basic concepts",
+    "learningObjectivesItem2": "Apply practical examples",
+    "learningObjectivesItem3": "Build a small project",
+    "noData": "No information available",
+    "refundPolicy": "Refund policy info",
+    "syllabusItem1": "Introduction & Setup",
+    "syllabusItem1Desc": "Course overview and environment setup",
+    "syllabusItem2": "Core Topics",
+    "syllabusItem2Desc": "Main topics and hands-on labs"
+  },
+  "courseCard": {
+    "registered": "Registered",
+    "available": "Open for enrollment",
+    "creditsShort": "cr",
+    "students": "students",
+    "enter": "Enter class",
+    "noInstructor": "No instructor"
   }
 }

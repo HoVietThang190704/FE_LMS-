@@ -17,7 +17,8 @@
 	},
 	"classes": {
 		"title": "Lớp học của tôi",
-		"enterButton": "Vào lớp"
+		"enterButton": "Vào lớp",
+		"lessonUnit": "bài học"
 	},
 	"assignments": {
 		"title": "Bài tập sắp hết hạn",
@@ -33,6 +34,46 @@
 		"pending": "Chưa làm",
 		"inProgress": "Đang làm",
 		"completed": "Hoàn thành"
+	},
+	"courseDetail": {
+		"backToHome": "Quay lại trang chủ",
+		"description": "Mô tả khóa học",
+		"credits": "Tín chỉ",
+		"instructor": "Giảng viên",
+		"schedule": "Lịch học",
+		"room": "Phòng học",
+		"enrollment": "Sĩ số",
+		"tags": "Thẻ",
+		"enterClass": "Vào lớp học",
+		"quickInfo": "Thông tin nhanh",
+		"code": "Mã môn",
+		"status": "Trạng thái",
+		"active": "Đang hoạt động",
+		"archived": "Đã lưu trữ",
+		"share": "Chia sẻ",
+		"enrolled": "Đã đăng ký",
+		"seats": "Số ghế trống",
+		"enroll": "Đăng ký ngay",
+		"full": "Đầy",
+		"overview": "Tổng quan",
+		"syllabus": "Nội dung khóa học",
+		"duration": "Thời lượng",
+		"creditsShort": "tc",
+		"learningObjectives": "Mục tiêu học tập",
+		"learningObjectivesItem1": "Hiểu các khái niệm cơ bản",
+		"learningObjectivesItem2": "Áp dụng ví dụ thực tế",
+		"learningObjectivesItem3": "Xây dựng dự án nhỏ",
+		"noData": "Chưa có thông tin",
+		"seats": "Ghế trống",
+		"refundPolicy": "Chính sách hoàn tiền"
+	},
+	"courseCard": {
+		"registered": "Đã đăng ký",
+		"available": "Có thể đăng ký",
+		"creditsShort": "tc",
+		"students": "sinh viên",
+		"enter": "Vào lớp học",
+		"noInstructor": "Chưa cập nhật"
 	}
 }
 

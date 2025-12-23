@@ -3,7 +3,7 @@
 import en from './en.json';
 import vi from './vi.json';
 
-export const messages: Record<string, any> = {
+export const messages: Record<'en' | 'vi', Record<string, unknown>> = {
   en,
   vi,
 };

@@ -1,90 +1,88 @@
 import React from 'react';
-import StatsCard from '@/components/card/StatsCard';
+import Link from 'next/link';
+import type { Assignment, HomeClass, Notification, Stats, UserProfile } from '@/lib/types/home';
+import type { TranslateFn } from '@/lib/shared/utils/translator';
+import type { Course } from '@/lib/api/courses';
+import HomeHero from './components/HomeHero';
+import StatsGrid from './components/StatsGrid';
+import RightPanel from './components/RightPanel';
 import ClassCard from '@/components/card/ClassCard';
-import AssignmentCard from '@/components/card/AssignmentCard';
-import { BookOpen, Clock, Trophy, TrendingUp, Bell } from 'lucide-react';
-import type { Stats, Course, Assignment, Notification } from '@/lib/types/home';
+import CourseCard from '@/components/card/CourseCard';
+import { ROUTES } from '@/lib/shared/constants/routeres';
 
 type HomeUIProps = {
+  locale: 'en' | 'vi';
+  t: TranslateFn;
+  messages: Record<string, unknown>;
+  user: UserProfile;
   stats: Stats;
-  classes: Course[];
+  classes: HomeClass[];
   assignments: Assignment[];
   notifications: Notification[];
+  courses: Course[];
 };
 
-export default function HomeUI({ stats, classes, assignments, notifications }: HomeUIProps) {
+export default function HomeUI({ locale, t, messages, user, stats, classes, assignments, notifications, courses }: HomeUIProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" data-locale={locale}>
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Xin chào, Nguyễn Văn A!</h1>
-          <p className="text-gray-600">Chào mừng bạn trở lại với hệ thống học tập</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatsCard
-            title="Môn học đang ký"
-            value={`${stats.enrolledCourses} môn`}
-            icon={BookOpen}
-            bgColor="bg-blue-50"
-            iconColor="text-blue-600"
-          />
-          <StatsCard
-            title="Bài tập chưa nộp"
-            value={stats.pendingAssignments}
-            icon={Clock}
-            bgColor="bg-yellow-50"
-            iconColor="text-yellow-600"
-          />
-          <StatsCard
-            title="Điểm trung bình"
-            value={stats.averageGrade}
-            icon={Trophy}
-            bgColor="bg-green-50"
-            iconColor="text-green-600"
-          />
-          <StatsCard
-            title="Tiến độ học tập"
-            value={`${stats.learningProgress}%`}
-            icon={TrendingUp}
-            bgColor="bg-purple-50"
-            iconColor="text-purple-600"
-          />
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <HomeHero user={user} t={t} />
+        <StatsGrid stats={stats} t={t} />
+        <section className="mt-10 space-y-6 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">{t('publicCourses.title')}</h2>
+              <p className="text-sm text-gray-500">{t('publicCourses.subtitle', { count: courses.length })}</p>
+            </div>
+            <Link
+              href={ROUTES.COURSES}
+              className="text-sm font-semibold text-blue-600 hover:text-blue-800"
+            >
+              {t('actions.viewCourses')}
+            </Link>
+          </div>
+
+          {courses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              {courses.map((course) => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  messages={messages}
+                  locale={locale}
+                  enrolled={(course.tags || []).includes('enrolled')}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-600">{t('publicCourses.empty')}</p>
+          )}
+        </section>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-3">
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Lớp học của tôi</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-6">{t('classes.title')}</h2>
               <div className="space-y-4">
                 {classes.map((classItem) => (
-                  <ClassCard key={classItem.id} {...classItem} />
+                  <ClassCard
+                    key={classItem.id}
+                    courseCode={classItem.courseCode}
+                    courseName={classItem.courseName}
+                    instructor={classItem.instructor}
+                    progress={classItem.progress}
+                    schedule={classItem.schedule}
+                    room={classItem.room}
+                    lessonProgress={classItem.lessonProgress}
+                    lessonLabel={t('classes.lessonUnit')}
+                    enterLabel={t('classes.enterButton')}
+                  />
                 ))}
               </div>
             </div>
           </div>
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Bài tập sắp hết hạn</h2>
-              <div className="space-y-4">
-                {assignments.map((assignment) => (
-                  <AssignmentCard key={assignment.id} {...assignment} />
-                ))}
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center gap-2 mb-6">
-                <Bell size={20} className="text-gray-900" />
-                <h2 className="text-xl font-bold text-gray-900">Thông báo</h2>
-              </div>
-              <div className="space-y-4">
-                {notifications.map((notification) => (
-                  <div key={notification.id} className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-1">{notification.title}</h4>
-                    <p className="text-xs text-gray-600 mb-1">{notification.description}</p>
-                    <p className="text-xs text-gray-400">{notification.time}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+          <div>
+            <RightPanel assignments={assignments} notifications={notifications} t={t} />
           </div>
         </div>
       </div>

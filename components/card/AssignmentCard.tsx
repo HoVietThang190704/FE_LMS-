@@ -6,13 +6,22 @@ interface AssignmentCardProps {
   courseCode: string;
   deadline: string;
   status?: 'pending' | 'in-progress' | 'completed';
+  deadlineLabel: string;
+  statusLabelMap: Record<'pending' | 'in-progress' | 'completed', string>;
 }
 
-export default function AssignmentCard({ title, courseCode, deadline, status = 'in-progress' }: AssignmentCardProps) {
+export default function AssignmentCard({
+  title,
+  courseCode,
+  deadline,
+  status = 'in-progress',
+  deadlineLabel,
+  statusLabelMap,
+}: AssignmentCardProps) {
   const statusConfig = {
-    pending: { text: 'Chưa làm', bg: 'bg-gray-100', color: 'text-gray-700' },
-    'in-progress': { text: 'Đang làm', bg: 'bg-yellow-100', color: 'text-yellow-700' },
-    completed: { text: 'Hoàn thành', bg: 'bg-green-100', color: 'text-green-700' },
+    pending: { text: statusLabelMap.pending, bg: 'bg-gray-100', color: 'text-gray-700' },
+    'in-progress': { text: statusLabelMap['in-progress'], bg: 'bg-yellow-100', color: 'text-yellow-700' },
+    completed: { text: statusLabelMap.completed, bg: 'bg-green-100', color: 'text-green-700' },
   };
 
   const currentStatus = statusConfig[status];
@@ -24,7 +33,9 @@ export default function AssignmentCard({ title, courseCode, deadline, status = '
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1 text-gray-500 text-xs">
           <Clock size={14} />
-          <span>Hạn: {deadline}</span>
+          <span>
+            {deadlineLabel}: {deadline}
+          </span>
         </div>
         <span className={`${currentStatus.bg} ${currentStatus.color} text-xs font-medium px-2.5 py-1 rounded`}>
           {currentStatus.text}
