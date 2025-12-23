@@ -2,13 +2,13 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { User } from 'lucide-react';
 import Link from 'next/link';
+import UserDropdown from '@/components/header/UserDropdown';
 import { usePathname } from 'next/navigation';
 import { NAV_ITEMS } from '@/lib/shared/constants/navItems';
 import { getMessages } from '@/app/i18n';
 import { IMAGES } from '@/lib/shared/constants/images';
-import { LOGO_SIZE, ICON_L, ICON_XXXL } from '@/lib/shared/constants/size';
+import { LOGO_SIZE, ICON_L } from '@/lib/shared/constants/size';
 
 export default function Navbar() {
   const navItems = NAV_ITEMS;
@@ -56,18 +56,13 @@ export default function Navbar() {
                   }`}
                 >
                   <item.icon size={ICON_L.WIDTH} />
-                  {label}
+                  {String(label)}
                 </Link>
               );
             })}
           </div>
           <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">Nguyễn Văn A</p>
-            </div>
-            <div className="bg-blue-600 text-white rounded-full p-2">
-              <User size={ICON_XXXL.WIDTH} />
-            </div>
+            <UserDropdown name="Nguyễn Văn A" />
           </div>
         </div>
       </div>
