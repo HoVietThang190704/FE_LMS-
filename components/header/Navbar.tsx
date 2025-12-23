@@ -1,24 +1,17 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
+import { BookOpen, Home, Award, BarChart3, User } from 'lucide-react';
 import Link from 'next/link';
-import UserDropdown from '@/components/header/UserDropdown';
-import { usePathname } from 'next/navigation';
-import { NAV_ITEMS } from '@/lib/shared/constants/navItems';
-import { getMessages } from '@/app/i18n';
 import { IMAGES } from '@/lib/shared/constants/images';
-import { LOGO_SIZE, ICON_L } from '@/lib/shared/constants/size';
+import { LOGO_SIZE, ICON_L, ICON_XXXL } from '@/lib/shared/constants/size';
 
 export default function Navbar() {
-  const navItems = NAV_ITEMS;
-
-  const locale = (typeof document !== 'undefined' && document.documentElement.lang)
-    ? (document.documentElement.lang.startsWith('en') ? 'en' : 'vi')
-    : (typeof navigator !== 'undefined' && navigator.language?.startsWith('en') ? 'en' : 'vi');
-  const messages = getMessages(locale as 'en' | 'vi');
-
-  const pathname = usePathname();
+  const navItems = [
+    { label: 'Trang chủ', icon: Home, href: '/', active: true },
+    { label: 'Khóa học', icon: BookOpen, href: '/courses', active: false },
+    { label: 'Bảng điểm', icon: Award, href: '/grades', active: false },
+    { label: 'Báo cáo', icon: BarChart3, href: '/reports', active: false },
+  ];
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -39,30 +32,28 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-1">
-            {navItems.map((item) => {
-              const isActive = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href || '');
-              const labelKey = item.labelKey.split('.').slice(-1)[0];
-              const label = (messages && messages.nav && (messages.nav as Record<string, string>)[labelKey]) || labelKey;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                  }`}
-                >
-                  <item.icon size={ICON_L.WIDTH} />
-                  {String(label)}
-                </Link>
-              );
-            })}
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  item.active
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <item.icon size={ICON_L.WIDTH} />
+                {item.label}
+              </Link>
+            ))}
           </div>
           <div className="flex items-center gap-3">
-            <UserDropdown name="Nguyễn Văn A" />
+            <div className="text-right">
+              <p className="text-sm font-medium text-gray-900">Nguyễn Văn A</p>
+            </div>
+            <div className="bg-blue-600 text-white rounded-full p-2">
+              <User size={ICON_XXXL.WIDTH} />
+            </div>
           </div>
         </div>
       </div>
