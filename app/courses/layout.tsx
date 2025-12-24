@@ -1,10 +1,6 @@
 import Navbar from '@/components/header/Navbar';
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CoursesLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Navbar />

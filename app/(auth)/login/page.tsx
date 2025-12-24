@@ -11,11 +11,21 @@ import LoginView, {
 import { ROUTES } from '@/lib/shared/constants/routeres';
 import { INTERNAL_API_ENDPOINTS } from '@/lib/shared/constants/endpoint';
 import { DEFAULT_LOCALE, getMessages } from '@/app/i18n';
+import { STORAGE_KEYS, AUTH_SESSION_EVENT } from '@/lib/shared/constants/storage';
+import type { StoredUser } from '@/app/hooks/useCurrentUser';
 const authCopy = getMessages(DEFAULT_LOCALE).auth as AuthCopy;
 
 const demoCredentials = {
   email: process.env.NEXT_PUBLIC_DEMO_EMAIL ?? 'any@email.com',
   password: process.env.NEXT_PUBLIC_DEMO_PASSWORD ?? 'anypassword'
+};
+
+type LoginResponsePayload = {
+  success: boolean;
+  message?: string;
+  user?: StoredUser;
+  accessToken?: string;
+  refreshToken?: string;
 };
 
 export default function LoginPage() {
@@ -27,6 +37,24 @@ export default function LoginPage() {
     rememberMe: false
   });
   const [status, setStatus] = useState<AuthStatus>({ isSubmitting: false });
+
+  const persistSession = useCallback((payload: LoginResponsePayload | null) => {
+    if (typeof window === 'undefined' || !payload) return;
+
+    if (payload.accessToken) {
+      window.localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, payload.accessToken);
+    }
+
+    if (payload.refreshToken) {
+      window.localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, payload.refreshToken);
+    }
+
+    if (payload.user) {
+      window.localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(payload.user));
+    }
+
+    window.dispatchEvent(new Event(AUTH_SESSION_EVENT));
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -81,11 +109,12 @@ export default function LoginPage() {
         })
       });
 
-      const payload = await response.json().catch(() => null);
-      if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as LoginResponsePayload | null;
+      if (!response.ok || !payload?.success) {
         throw new Error(payload?.message ?? 'Đăng nhập thất bại, vui lòng thử lại.');
       }
 
+      persistSession(payload);
       setStatus({ isSubmitting: false, success: authCopy.status.success });
       router.push(ROUTES.HOME);
     } catch (error) {
@@ -94,7 +123,7 @@ export default function LoginPage() {
         error: error instanceof Error ? error.message : 'Đăng nhập thất bại, vui lòng thử lại.'
       });
     }
-  }, [values, router]);
+  }, [values, router, persistSession]);
 
   const handleForgotPassword = useCallback(() => {
     router.push(ROUTES.FORGOT_PASSWORD);

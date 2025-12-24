@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ApiError } from "@/lib/infra/api/types/api-error";
+import { ApiError } from "@/lib/shared/utils/api";
 import { HttpStatusCode } from "@/lib/shared/constants/http";
 import { INTERNAL_API_ENDPOINTS } from "@/lib/shared/constants/endpoints";
 

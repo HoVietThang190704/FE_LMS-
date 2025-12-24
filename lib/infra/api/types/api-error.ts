@@ -1,4 +1,1 @@
-export interface ApiError {
-  status?: number;
-  message?: string;
-}
+export type { ApiError } from '@/lib/shared/utils/api';
