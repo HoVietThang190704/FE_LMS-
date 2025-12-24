@@ -14,13 +14,16 @@ export interface ApiResponse<T = unknown> {
 }
 
 export class ApiError extends Error {
+  public readonly statusCode?: number;
+
   constructor(
     message: string,
-    public statusCode?: number,
+    public status?: number,
     public payload?: unknown
   ) {
     super(message);
     this.name = 'ApiError';
+    this.statusCode = status;
   }
 }
 

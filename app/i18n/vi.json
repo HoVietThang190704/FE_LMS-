@@ -111,6 +111,17 @@
   "profile": {
     "name": "{name}"
   },
+  "userMenu": {
+    "login": "Đăng nhập",
+    "profile": "Hồ sơ cá nhân",
+    "settings": "Cài đặt",
+    "notifications": "Thông báo",
+    "changePassword": "Đổi mật khẩu",
+    "support": "Trợ giúp & Hỗ trợ",
+    "logout": "Đăng xuất",
+    "guest": "Khách",
+    "userFallback": "Người dùng"
+  },
   "assignmentStatus": {
     "pending": "Chưa làm",
     "inProgress": "Đang làm",

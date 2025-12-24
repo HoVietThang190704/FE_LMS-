@@ -1,4 +1,4 @@
-import { ApiError } from '@/lib/utils/api-utils';
+import { ApiError } from '@/lib/shared/utils/api';
 
 export type BackendFetchOptions = RequestInit & {
   parseJson?: boolean;
@@ -27,7 +27,7 @@ export const backendFetch = async (url: string, options: BackendFetchOptions = {
       // ignore JSON parse errors
     }
 
-    throw new ApiError(response.status, message);
+    throw new ApiError(message, response.status);
   }
 
   if (parseJson) {

@@ -111,6 +111,17 @@
   "profile": {
     "name": "{name}"
   },
+  "userMenu": {
+    "login": "Sign in",
+    "profile": "My profile",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "changePassword": "Change password",
+    "support": "Help & Support",
+    "logout": "Sign out",
+    "guest": "Guest",
+    "userFallback": "User"
+  },
   "assignmentStatus": {
     "pending": "Pending",
     "inProgress": "In progress",

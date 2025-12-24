@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { backendFetch } from '@/lib/infra/api/httpClient';
 import { EXTERNAL_API_ENDPOINTS } from '@/lib/shared/constants/endpoint';
 
@@ -15,17 +14,20 @@ export type RegisterPayload = {
   phone?: string;
 };
 
-const forwardJson = async <TBody extends Record<string, unknown>>(
+const forwardJson = async <TBody extends Record<string, unknown>, TResult = unknown>(
   url: string,
   payload: TBody
-) => {
-  const { response, data } = await backendFetch(url, {
+): Promise<TResult> => {
+  const { data } = await backendFetch(url, {
     method: 'POST',
     body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json'
+    },
     parseJson: true
   });
 
-  return NextResponse.json(data, { status: response.status });
+  return data as TResult;
 };
 
 export const login = (payload: LoginPayload) => forwardJson(EXTERNAL_API_ENDPOINTS.AUTH.LOGIN, payload);
