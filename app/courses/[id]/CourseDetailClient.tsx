@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import CourseRegisterDialog from '@/components/card/CourseRegisterDialog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, MapPin, Users, Tag, Share2, BookOpen, Clock } from 'lucide-react';
@@ -15,6 +16,8 @@ interface CourseDetailClientProps {
 }
 
 export default function CourseDetailClient({ course, messages, locale }: CourseDetailClientProps) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
   const rawImage = course.image?.trim();
   const imageSrc = rawImage
     ? rawImage.startsWith('http') || rawImage.startsWith('/')
@@ -24,7 +27,10 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
 
   const t = createTranslator(messages);
 
-  const seatsAvailable = (course.capacity ?? 0) - (course.enrolled ?? 0);
+  const enrolledCount = course.enrolled ?? 0;
+  const capacity = course.capacity ?? 0;
+  const isFull = enrolledCount >= capacity;
+  const seatsAvailable = capacity - enrolledCount;
 
   return (
     <div className="min-h-screen bg-gray-50" data-locale={locale}>
@@ -136,9 +142,25 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               <div className="flex flex-col gap-3">
                 <div className="text-sm text-gray-600">{t('courseDetail.seats','Seats available')}</div>
                 <div className="text-2xl font-bold text-gray-900">{seatsAvailable > 0 ? seatsAvailable : t('courseDetail.full','Full')}</div>
-                <button className="mt-3 w-full bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700 transition">
-                  {t('courseDetail.enroll','Enroll now')}
+                <button
+                  className={`mt-3 w-full rounded-lg py-2 font-semibold transition ${isFull ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                  onClick={() => setOpenDialog(true)}
+                  disabled={isFull}
+                >
+                  {t('courseDetail.enroll','Đăng ký môn học')}
                 </button>
+                      <CourseRegisterDialog
+                        open={openDialog}
+                        onClose={() => setOpenDialog(false)}
+                        onConfirm={() => {}}
+                        loading={loading}
+                        courseName={course.name}
+                        classCode={course.code}
+                        teacher={course.instructor ?? t('courseCard.noInstructor','Chưa cập nhật')}
+                        currentSlot={enrolledCount}
+                        maxSlot={capacity}
+                        isFull={isFull}
+                      />
                 <div className="text-xs text-gray-500 mt-2">{t('courseDetail.refundPolicy','Refund policy info')}</div>
               </div>
             </div>
