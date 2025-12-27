@@ -224,6 +224,13 @@ export const POPUP_OFFSETS = {
   },
 };
 
+export const MODAL_MAX_WIDTHS = {
+  sm: 'max-w-md',
+  md: 'max-w-2xl',
+  lg: 'max-w-4xl',
+  full: 'w-full h-full max-w-none',
+};
+
 export const IMAGE_GRID = {
   ITEM_SIZE: 80,
   ITEM_SIZE_MOBILE: 8,
@@ -273,6 +280,7 @@ const DEFAULT_SIZES = {
   MARKETPLACE_LAYOUT,
   IMAGE_CAROUSEL,
   ICON_LOCATION,
+  MODAL_MAX_WIDTHS,
   POPUP_OFFSETS,
   IMAGE_GRID,
 };

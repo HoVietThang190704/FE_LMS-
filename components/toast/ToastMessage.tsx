@@ -19,9 +19,9 @@ const ToastMessage: React.FC<ToastMessageProps> = ({ type, message, isVisible })
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 transform transition-all duration-300 ease-in-out ${
+      className={`fixed bottom-6 right-6 z-[100] transform transition-all duration-300 ease-in-out ${
         isVisible
-          ? 'translate-x-0 opacity-100'
+          ? 'translate-x-0 opacity-100 pointer-events-auto'
           : 'translate-x-full opacity-0 pointer-events-none'
       }`}
     >

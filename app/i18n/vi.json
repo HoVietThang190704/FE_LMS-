@@ -175,5 +175,17 @@
     "students": "sinh viên",
     "enter": "Vào lớp học",
     "noInstructor": "Chưa cập nhật"
+  },
+  "enrollDialog": {
+    "title": "Xác nhận đăng ký môn học",
+    "subtitle": "Bạn có chắc chắn muốn đăng ký môn học này không?",
+    "confirm": "Xác nhận đăng ký",
+    "cancel": "Hủy",
+    "success": "Đăng ký thành công",
+    "failure": "Đăng ký thất bại",
+    "loading": "Đang xử lý...",
+    "full": "Lớp học này đã đầy",
+    "instructor": "Giảng viên",
+    "seats": "Sĩ số"
   }
 }

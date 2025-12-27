@@ -175,5 +175,17 @@
     "students": "students",
     "enter": "Enter class",
     "noInstructor": "No instructor"
+  },
+  "enrollDialog": {
+    "title": "Confirm enrollment",
+    "subtitle": "Are you sure you want to enroll in this course?",
+    "confirm": "Confirm enrollment",
+    "cancel": "Cancel",
+    "success": "Enrolled successfully",
+    "failure": "Enrollment failed",
+    "loading": "Processing...",
+    "full": "This class is full",
+    "instructor": "Instructor",
+    "seats": "Seats"
   }
 }
