@@ -9,9 +9,10 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-function detectLocaleFromHeaders() {
+async function detectLocaleFromHeaders() {
   try {
-    const accept = headers().get('accept-language') || '';
+    const h = await headers();
+    const accept = h.get('accept-language') || '';
     if (accept.includes('vi')) return 'vi';
     return 'en';
   } catch (e) {
@@ -21,7 +22,7 @@ function detectLocaleFromHeaders() {
 
 export default async function CourseDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const locale: 'en' | 'vi' = detectLocaleFromHeaders();
+  const locale: 'en' | 'vi' = await detectLocaleFromHeaders();
   const messages = getMessages(locale);
 
   const course = await getPublicCourseById(id);

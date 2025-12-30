@@ -18,8 +18,6 @@ export const ROUTES = {
   SETTINGS_USER_PLATFORMS: '/settings/user-platforms',
   SEARCH: '/search',
   CHANGE_PASSWORD: '/settings/change-password',
-  FORGOT_PASSWORD: '/forgot-password',
-  RESET_PASSWORD: '/reset-password',
   NOTIFICATIONS: '/notifications',
   ONBOARDING: '/onboarding',
   CATEGORY_CHILDREN: '/categories',
@@ -30,6 +28,7 @@ export const ROUTES = {
   COURSE_DETAIL: (id: string) => `/courses/${id}`,
   EXERCISES: '/exercises',
   EXERCISE_DETAIL: (id: string) => `/exercises/${id}`,
+  CLASSROOM: (id: string) => `/classroom/${id}`,
   GRADES: '/grades',
   REPORTS: '/reports'
 } as const;
