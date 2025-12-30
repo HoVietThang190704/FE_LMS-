@@ -28,6 +28,8 @@ export const ROUTES = {
   MY_DASHBOARD: '/my-dashboard',
   COURSES: '/courses',
   COURSE_DETAIL: (id: string) => `/courses/${id}`,
+  EXERCISES: '/exercises',
+  EXERCISE_DETAIL: (id: string) => `/exercises/${id}`,
   GRADES: '/grades',
   REPORTS: '/reports'
 } as const;
