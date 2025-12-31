@@ -176,6 +176,23 @@
     "enter": "Enter class",
     "noInstructor": "No instructor"
   },
+  "classroom": {
+    "courseName": "Data Structures and Algorithms",
+    "contentTab": "Content",
+    "resourcesTab": "Resources",
+    "assignmentsTab": "Assignments",
+    "courseInfo": "Course information",
+    "downloadAll": "Download all materials",
+    "credits": "Credits",
+    "schedule": "Schedule",
+    "room": "Room",
+    "totalLessons": "Total lessons",
+    "instructor": "Instructor",
+    "noResources": "No resources yet. Add resources here.",
+    "noExercises": "No exercises.",
+    "learn": "Learn",
+    "durationSeconds": "{s}s"
+  },
   "enrollDialog": {
     "title": "Confirm enrollment",
     "subtitle": "Are you sure you want to enroll in this course?",

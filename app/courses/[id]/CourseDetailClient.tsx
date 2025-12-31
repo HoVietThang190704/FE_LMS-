@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, MapPin, Users, Tag, Share2, BookOpen, Clock } from 'lucide-react';
 import type { Course } from '@/lib/api/courses';
+import { enrollCourse } from '@/lib/api/enrollments';
 import { createTranslator } from '@/lib/shared/utils/translator';
 import { ROUTES } from '@/lib/shared/constants/routeres';
+import { useToast } from '@/app/hooks/useToast';
 
 interface CourseDetailClientProps {
   course: Course;
@@ -15,6 +17,7 @@ interface CourseDetailClientProps {
 }
 
 export default function CourseDetailClient({ course, messages, locale }: CourseDetailClientProps) {
+  const toast = useToast();
   const rawImage = course.image?.trim();
   const imageSrc = rawImage
     ? rawImage.startsWith('http') || rawImage.startsWith('/')
@@ -24,7 +27,30 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
 
   const t = createTranslator(messages);
 
-  const seatsAvailable = (course.capacity ?? 0) - (course.enrolled ?? 0);
+  const [isEnrolled, setIsEnrolled] = useState<boolean>(Boolean(course.isEnrolled || (course.tags || []).includes('enrolled')));
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const seatsAvailable = useMemo(() => (course.capacity ?? 0) - (course.enrolled ?? 0), [course.capacity, course.enrolled]);
+
+  const handleEnroll = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      await enrollCourse(String(course.id));
+      setIsEnrolled(true);
+      toast.success(t('enrollDialog.success', 'Đăng ký môn học thành công'));
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === 'object' && 'message' in err && typeof (err as any).message === 'string'
+          ? (err as any).message
+          : t('enrollDialog.failure', 'Đăng ký thất bại');
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50" data-locale={locale}>
@@ -136,9 +162,18 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               <div className="flex flex-col gap-3">
                 <div className="text-sm text-gray-600">{t('courseDetail.seats','Seats available')}</div>
                 <div className="text-2xl font-bold text-gray-900">{seatsAvailable > 0 ? seatsAvailable : t('courseDetail.full','Full')}</div>
-                <button className="mt-3 w-full bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700 transition">
-                  {t('courseDetail.enroll','Enroll now')}
+                <button
+                  disabled={isEnrolled || seatsAvailable <= 0 || isLoading}
+                  onClick={handleEnroll}
+                  className={`mt-3 w-full rounded-lg py-2 font-semibold transition ${
+                    isEnrolled
+                      ? 'bg-green-600 text-white cursor-not-allowed'
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                  } ${isLoading ? 'opacity-80' : ''}`}
+                >
+                  {isEnrolled ? t('courseCard.registered','Đã đăng ký') : isLoading ? t('enrollDialog.loading','Đang xử lý...') : t('courseDetail.enroll','Enroll now')}
                 </button>
+                {error && <div className="text-xs text-red-500">{error}</div>}
                 <div className="text-xs text-gray-500 mt-2">{t('courseDetail.refundPolicy','Refund policy info')}</div>
               </div>
             </div>

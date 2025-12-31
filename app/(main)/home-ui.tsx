@@ -50,7 +50,7 @@ export default function HomeUI({ locale, t, messages, user, stats, classes, assi
                   course={course}
                   messages={messages}
                   locale={locale}
-                  enrolled={(course.tags || []).includes('enrolled')}
+                  enrolled={Boolean(course.isEnrolled || (course.tags || []).includes('enrolled'))}
                 />
               ))}
             </div>
@@ -75,6 +75,7 @@ export default function HomeUI({ locale, t, messages, user, stats, classes, assi
                     lessonProgress={classItem.lessonProgress}
                     lessonLabel={t('classes.lessonUnit')}
                     enterLabel={t('classes.enterButton')}
+                    actionHref={ROUTES.CLASSROOM(String(classItem.id))}
                   />
                 ))}
               </div>

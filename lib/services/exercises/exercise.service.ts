@@ -1,50 +1,74 @@
-import type { Exercise } from '@/lib/types/exercises';
-import { CODE_TEMPLATES } from './compiler.service';
+import type { Exercise, CodeLanguage } from '@/lib/types/exercises';
+import { fetchFromApi } from '@/lib/shared/utils/api';
+import { EXERCISE_API } from '@/lib/shared/constants/exercise-endpoints';
+
+type BackendTestCase = {
+  id: string;
+  input: string;
+  expectedOutput: string;
+  visible?: boolean;
+  explanation?: string;
+};
+
+type BackendExercise = {
+  _id?: string;
+  id?: string;
+  title?: string;
+  description?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
+  language?: string;
+  template?: string;
+  testCases?: BackendTestCase[];
+  constraints?: string;
+  examples?: Array<{ input: string; output: string; explanation?: string }>;
+  timeLimit?: number;
+  memoryLimit?: number;
+};
 
 export async function getExerciseById(id: string): Promise<Exercise> {
-  const mockExercise: Exercise = {
-    id,
-    title: 'Sum of Two Numbers',
-    description: 'Write a program that takes two numbers as input and outputs their sum.',
-    difficulty: 'easy',
-    language: 'python',
-    template: CODE_TEMPLATES.python,
-    testCases: [
-      {
-        id: '1',
-        input: '3\n5',
-        expectedOutput: '8',
-        visible: true,
-        explanation: 'Sum of 3 and 5 is 8',
-      },
-      {
-        id: '2',
-        input: '10\n20',
-        expectedOutput: '30',
-        visible: true,
-      },
-      {
-        id: '3',
-        input: '-5\n5',
-        expectedOutput: '0',
-        visible: false,
-      },
-    ],
-    constraints: '-1000 ≤ a, b ≤ 1000',
-    examples: [
-      {
-        input: '3\n5',
-        output: '8',
-        explanation: 'Simply add the two numbers together',
-      },
-    ],
-    timeLimit: 10000,
-    memoryLimit: 256000,
-  };
+  const data = await fetchFromApi<BackendExercise>(EXERCISE_API.GET_EXERCISE(id));
+  const ex = data as BackendExercise;
 
-  return mockExercise;
+  return {
+    id: (ex._id || ex.id) as string,
+    title: ex.title || '',
+    description: ex.description || '',
+    difficulty: ex.difficulty || 'easy',
+    language: (ex.language || 'python') as CodeLanguage,
+    template: ex.template || '',
+    testCases: (ex.testCases || []).map((t) => ({
+      id: t.id,
+      input: t.input,
+      expectedOutput: t.expectedOutput,
+      visible: !!t.visible,
+      explanation: t.explanation,
+    })),
+    constraints: ex.constraints,
+    examples: ex.examples || [],
+    timeLimit: ex.timeLimit,
+    memoryLimit: ex.memoryLimit,
+  } as Exercise;
 }
 
-export function getExercises(): Promise<Exercise[]> {
-  return Promise.resolve([]);
+export async function getExercises(): Promise<Exercise[]> {
+  const data = await fetchFromApi<BackendExercise[]>(EXERCISE_API.GET_EXERCISES);
+  return (data || []).map((ex) => ({
+    id: (ex._id || ex.id) as string,
+    title: ex.title || '',
+    description: ex.description || '',
+    difficulty: ex.difficulty || 'easy',
+    language: (ex.language || 'python') as CodeLanguage,
+    template: ex.template || '',
+    testCases: (ex.testCases || []).map((t) => ({
+      id: t.id,
+      input: t.input,
+      expectedOutput: t.expectedOutput,
+      visible: !!t.visible,
+      explanation: t.explanation,
+    })),
+    constraints: ex.constraints,
+    examples: ex.examples || [],
+    timeLimit: ex.timeLimit,
+    memoryLimit: ex.memoryLimit,
+  }));
 }

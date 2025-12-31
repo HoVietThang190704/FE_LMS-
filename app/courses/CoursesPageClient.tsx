@@ -15,9 +15,9 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
     let arr = initialCourses || [];
 
     if (tab === 'enrolled') {
-      arr = arr.filter((c) => (c.tags || []).includes('enrolled'));
+      arr = arr.filter((c) => Boolean(c.isEnrolled || (c.tags || []).includes('enrolled')));
     } else if (tab === 'available') {
-      arr = arr.filter((c) => !(c.tags || []).includes('enrolled'));
+      arr = arr.filter((c) => !Boolean(c.isEnrolled || (c.tags || []).includes('enrolled')));
     }
 
     if (q.trim()) {
@@ -66,7 +66,7 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c) => (
-            <CourseCard key={c.id} course={c} enrolled={(c.tags || []).includes('enrolled')} />
+            <CourseCard key={c.id} course={c} enrolled={Boolean(c.isEnrolled || (c.tags || []).includes('enrolled'))} />
           ))}
         </div>
 

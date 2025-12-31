@@ -1,15 +1,9 @@
 import Link from 'next/link';
 import { ROUTES } from '@/lib/shared/constants/routeres';
+import { getExercises } from '@/lib/services/exercises/exercise.service';
 
-export default function ExercisesPage() {
-  const sampleExercises = [
-    {
-      id: '1',
-      title: 'Sum of Two Numbers',
-      difficulty: 'easy',
-      language: 'python',
-    },
-  ];
+export default async function ExercisesPage() {
+  const exercises = await getExercises();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -17,7 +11,7 @@ export default function ExercisesPage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Code Exercises</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sampleExercises.map((exercise) => (
+          {exercises.map((exercise) => (
             <Link
               key={exercise.id}
               href={`/exercises/${exercise.id}`}

@@ -176,6 +176,23 @@
     "enter": "Vào lớp học",
     "noInstructor": "Chưa cập nhật"
   },
+  "classroom": {
+    "courseName": "Cấu trúc dữ liệu và Giải thuật",
+    "contentTab": "Nội dung",
+    "resourcesTab": "Tài nguyên",
+    "assignmentsTab": "Bài tập",
+    "courseInfo": "Thông tin môn học",
+    "downloadAll": "Tải tất cả tài liệu",
+    "credits": "Số tín chỉ",
+    "schedule": "Lịch học",
+    "room": "Phòng học",
+    "totalLessons": "Tổng số bài học",
+    "instructor": "Giảng viên",
+    "noResources": "Chưa có tài nguyên. Thêm tài nguyên ở đây.",
+    "noExercises": "Không có bài tập.",
+    "learn": "Học",
+    "durationSeconds": "{s}s"
+  },
   "enrollDialog": {
     "title": "Xác nhận đăng ký môn học",
     "subtitle": "Bạn có chắc chắn muốn đăng ký môn học này không?",
