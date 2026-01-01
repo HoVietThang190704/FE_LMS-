@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import type { Exercise } from '@/lib/types/exercises';
 import ExercisesPanel from './ExercisesPanel';
+import TheoreticalExercisesPanel from './TheoreticalExercisesPanel';
+import PracticalExercisesPanel from './PracticalExercisesPanel';
 import { CheckCircle2, Circle, Clock } from 'lucide-react';
 import { createTranslator } from '@/lib/shared/utils/translator';
 
@@ -17,31 +19,67 @@ type Week = {
   lessons: Lesson[];
 };
 
-export default function ClassroomTabs({ weeks, exercises, messages }: { weeks: Week[]; exercises: Exercise[]; messages: Record<string, unknown> }) {
-  const [tab, setTab] = useState<'content' | 'resources' | 'assignments'>('content');
+interface ClassroomTabsProps {
+  weeks: Week[];
+  exercises: Exercise[];
+  courseId?: string;
+  messages: Record<string, unknown>;
+}
+
+export default function ClassroomTabs({
+  weeks,
+  exercises,
+  courseId,
+  messages,
+}: ClassroomTabsProps) {
+  const [tab, setTab] = useState<
+    'content' | 'resources' | 'theoretical' | 'practical'
+  >('content');
   const t = createTranslator(messages || {});
 
   return (
     <div>
       <div className="border-b border-gray-200 mb-6">
-        <div className="flex gap-4 text-sm">
+        <div className="flex gap-4 text-sm overflow-x-auto">
           <button
             onClick={() => setTab('content')}
-            className={`px-4 py-2 ${tab === 'content' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            className={`px-4 py-2 whitespace-nowrap ${
+              tab === 'content'
+                ? 'border-b-2 border-black font-semibold'
+                : 'text-gray-500'
+            }`}
           >
             {t('classroom.contentTab', 'Nội dung')}
           </button>
           <button
             onClick={() => setTab('resources')}
-            className={`px-4 py-2 ${tab === 'resources' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            className={`px-4 py-2 whitespace-nowrap ${
+              tab === 'resources'
+                ? 'border-b-2 border-black font-semibold'
+                : 'text-gray-500'
+            }`}
           >
             {t('classroom.resourcesTab', 'Tài nguyên')}
           </button>
           <button
-            onClick={() => setTab('assignments')}
-            className={`px-4 py-2 ${tab === 'assignments' ? 'border-b-2 border-black font-semibold' : 'text-gray-500'}`}
+            onClick={() => setTab('theoretical')}
+            className={`px-4 py-2 whitespace-nowrap ${
+              tab === 'theoretical'
+                ? 'border-b-2 border-black font-semibold'
+                : 'text-gray-500'
+            }`}
           >
-            {t('classroom.assignmentsTab', 'Bài tập')}
+            Bài tập lý thuyết
+          </button>
+          <button
+            onClick={() => setTab('practical')}
+            className={`px-4 py-2 whitespace-nowrap ${
+              tab === 'practical'
+                ? 'border-b-2 border-black font-semibold'
+                : 'text-gray-500'
+            }`}
+          >
+            Bài tập thực hành
           </button>
         </div>
       </div>
@@ -50,11 +88,17 @@ export default function ClassroomTabs({ weeks, exercises, messages }: { weeks: W
         {tab === 'content' && (
           <div className="space-y-4">
             {weeks.map((week) => (
-              <div key={week.title} className="border border-gray-200 rounded-xl p-4 bg-gray-50">
+              <div
+                key={week.title}
+                className="border border-gray-200 rounded-xl p-4 bg-gray-50"
+              >
                 <h3 className="font-semibold text-gray-900 mb-3">{week.title}</h3>
                 <div className="space-y-3">
                   {week.lessons.map((lesson) => (
-                    <div key={lesson.title} className="flex items-center justify-between bg-white rounded-lg border border-gray-200 px-4 py-3">
+                    <div
+                      key={lesson.title}
+                      className="flex items-center justify-between bg-white rounded-lg border border-gray-200 px-4 py-3"
+                    >
                       <div className="flex items-center gap-3 text-gray-800">
                         {lesson.completed ? (
                           <CheckCircle2 className="text-green-600" size={18} />
@@ -77,14 +121,48 @@ export default function ClassroomTabs({ weeks, exercises, messages }: { weeks: W
 
         {tab === 'resources' && (
           <div className="space-y-4">
-            <div className="border border-gray-200 rounded-xl p-4 bg-white text-sm text-gray-600">{t('classroom.noResources', 'Chưa có tài nguyên. Thêm tài nguyên ở đây.')}</div>
+            <div className="border border-gray-200 rounded-xl p-4 bg-white text-sm text-gray-600">
+              {t(
+                'classroom.noResources',
+                'Chưa có tài nguyên. Thêm tài nguyên ở đây.'
+              )}
+            </div>
           </div>
         )}
 
-        {tab === 'assignments' && (
+        {tab === 'theoretical' && (
           <div className="border border-gray-200 rounded-xl p-4 bg-white">
-            <h3 className="font-semibold text-gray-900 mb-3">{t('classroom.assignmentsTab', 'Bài tập')}</h3>
-            <ExercisesPanel exercises={exercises} messages={messages} />
+            <h3 className="font-semibold text-gray-900 mb-4">
+              Bài tập lý thuyết
+            </h3>
+            {courseId ? (
+              <TheoreticalExercisesPanel
+                courseId={courseId}
+                messages={messages}
+              />
+            ) : (
+              <div className="text-sm text-gray-500">
+                Không thể tải bài tập lý thuyết.
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'practical' && (
+          <div className="border border-gray-200 rounded-xl p-4 bg-white">
+            <h3 className="font-semibold text-gray-900 mb-4">
+              Bài tập thực hành
+            </h3>
+            {courseId ? (
+              <PracticalExercisesPanel
+                courseId={courseId}
+                messages={messages}
+              />
+            ) : (
+              <div className="text-sm text-gray-500">
+                Không thể tải bài tập thực hành.
+              </div>
+            )}
           </div>
         )}
       </div>

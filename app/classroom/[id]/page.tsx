@@ -93,8 +93,8 @@ export default async function ClassroomPage({ params }: PageProps) {
 
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              {/* Tabs: Nội dung / Tài nguyên / Bài tập */}
-              <ClassroomTabs weeks={mockWeeks} exercises={exercises} messages={messages} />
+              {/* Tabs: Nội dung / Tài nguyên / Bài tập lý thuyết / Bài tập thực hành */}
+              <ClassroomTabs weeks={mockWeeks} exercises={exercises} courseId={id} messages={messages} />
             </div>
 
             <div className="space-y-4">
