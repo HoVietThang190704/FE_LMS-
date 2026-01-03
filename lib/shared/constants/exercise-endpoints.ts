@@ -13,3 +13,15 @@ export const EXERCISE_API = {
   SUBMIT_SOLUTION: buildApiUrl('/api/exercises/submit'),
   GET_SUBMISSION: (id: string) => buildApiUrl(`/api/submissions/${id}`),
 };
+
+export const EXERCISE_PROBLEM_API = {
+  GET_PROBLEMS: buildApiUrl('/api/exercise-problems'),
+  GET_PROBLEM: (id: string) => buildApiUrl(`/api/exercise-problems/${id}`),
+  GET_PROBLEMS_BY_COURSE: (courseId: string) => buildApiUrl(`/api/exercise-problems?courseId=${courseId}`),
+};
+
+export const EXAM_API = {
+  GET_EXAMS: buildApiUrl('/api/exams'),
+  GET_EXAM: (id: string) => buildApiUrl(`/api/exams/${id}`),
+  GET_EXAMS_BY_COURSE: (courseId: string) => buildApiUrl(`/api/exams?courseId=${courseId}`),
+};
