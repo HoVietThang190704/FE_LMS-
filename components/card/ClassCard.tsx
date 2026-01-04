@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Calendar, MapPin } from 'lucide-react';
-
 interface ClassCardProps {
   courseCode: string;
   courseName: string;
@@ -43,11 +42,14 @@ export default function ClassCard({
         <span className="text-xs text-gray-500 whitespace-nowrap">{lessonProgress} {lessonLabel}</span>
       </div>
 
-      <div className="mb-3 w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-        <div
-          className="h-full bg-black rounded-full transition-all"
-          style={{ width: `${progress}%` }}
-        />
+      <div className="mb-3 w-full bg-gray-100 rounded-full h-full overflow-hidden">
+        <div className="h-2 w-full bg-gray-200 rounded-full">
+          <div
+            className="h-2 bg-black rounded-full transition-all duration-300"
+            style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+            aria-label={`Progress ${progress}%`}
+          />
+        </div>
       </div>
 
       <div className="flex items-center justify-between text-sm text-gray-600 mb-4">

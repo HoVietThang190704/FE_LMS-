@@ -1,5 +1,3 @@
-// Small loader for i18n messages. This keeps messages in `app/i18n` and
-// allows future wiring for next-intl or a custom t() helper.
 import en from './en.json';
 import vi from './vi.json';
 
@@ -16,5 +14,14 @@ export function getMessages(locale: SupportedLocale = DEFAULT_LOCALE) {
   return messages[locale] || en;
 }
 
-const i18n = { messages, getMessages, DEFAULT_LOCALE };
+export function resolveMessage(value: unknown, fallback?: string): string {
+  if (typeof value === 'string') return value;
+  if (value && typeof value === 'object') {
+    const v = value as Record<string, unknown>;
+    if (typeof v.title === 'string') return v.title;
+  }
+  return fallback || '';
+}
+
+const i18n = { messages, getMessages, DEFAULT_LOCALE, resolveMessage };
 export default i18n;

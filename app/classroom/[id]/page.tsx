@@ -1,61 +1,65 @@
 import React from 'react';
+import { cookies } from 'next/headers';
 import { Clock, Download, MapPin, Users } from 'lucide-react';
 import Link from 'next/link';
 import { getMessages } from '@/app/i18n';
 import { createTranslator } from '@/lib/shared/utils/translator';
 import { ROUTES } from '@/lib/shared/constants/routeres';
 import ClassroomTabs from '@/components/classroom/ClassroomTabs';
+import ClassroomProgress from '@/components/classroom/ClassroomProgress';
+import { getClassroom } from '@/lib/services/classroom/classroom.service';
+import type { ClassroomLesson } from '@/lib/types/classroom';
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-type Lesson = {
-  title: string;
-  duration: string;
-  completed: boolean;
-};
-
 type Week = {
   title: string;
-  lessons: Lesson[];
+  week: number;
+  lessons: ClassroomLesson[];
 };
-
-const mockWeeks: Week[] = [
-  {
-    title: 'Tuần 1-2: Mảng và Chuỗi',
-    lessons: [
-      { title: 'Mảng cơ bản', duration: '14:20', completed: true },
-      { title: 'Kỹ thuật Two Pointers', duration: '16:45', completed: true },
-      { title: 'Xử lý chuỗi', duration: '15:30', completed: true },
-    ],
-  },
-  {
-    title: 'Tuần 3-4: Danh sách liên kết',
-    lessons: [
-      { title: 'Danh sách liên kết đơn', duration: '18:15', completed: true },
-      { title: 'Danh sách liên kết kép', duration: '16:30', completed: false },
-    ],
-  },
-];
 
 export default async function ClassroomPage({ params }: PageProps) {
   const { id } = await params;
-  void id;
   const locale: 'en' | 'vi' = 'vi';
   const messages = getMessages(locale);
   const t = createTranslator(messages);
+  
+  // Lấy token từ cookies để gửi kèm API request (cho Server Component)
+  const cookieStore = await cookies();
+  const token = cookieStore.get('edu.lms.accessToken')?.value || null;
+  
+  const classroom = await getClassroom(id, { token });
 
-  const progress = 42;
-  const courseCode = 'IT3230';
-  const courseName = t('classroom.courseName', 'Cấu trúc dữ liệu và Giải thuật');
-  const instructor = 'PGS.TS. Trần Văn Minh';
-  const email = 'minh.tv@university.edu.vn';
-  const schedule = 'Thứ 5, 13:00-15:00';
-  const room = 'D3-301';
-  const credits = 4;
-  const totalLessons = 5;
-  const exercises = await (await import('@/lib/services/exercises/exercise.service')).getExercises();
+  const lessons = classroom?.lessons || [];
+  const resources = classroom?.resources || [];
+  const groupedWeeks = lessons.reduce<Map<number, ClassroomLesson[]>>((acc, lesson) => {
+    const current = acc.get(lesson.week) || [];
+    current.push(lesson);
+    acc.set(lesson.week, current);
+    return acc;
+  }, new Map());
+
+  const weeks: Week[] = Array.from(groupedWeeks.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([weekNumber, lessonList]) => ({
+      title: `Tuần ${weekNumber}`,
+      week: weekNumber,
+      lessons: lessonList.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
+    }));
+
+  const progress = classroom?.progress ?? 0;
+  const progressDetails = classroom?.progressDetails;
+  const courseCode = classroom?.course.code || id;
+  const courseName = classroom?.course.name || t('classroom.courseName', 'Lớp học');
+  const instructor = classroom?.course.instructor || t('classroom.instructorUnknown', 'Chưa cập nhật giảng viên');
+  const email = t('classroom.emailUnknown', 'Chưa cập nhật email');
+  const schedule = classroom?.course.schedule || t('classroom.scheduleUnknown', 'Chưa cập nhật lịch học');
+  const room = classroom?.course.room || t('classroom.roomUnknown', 'Chưa cập nhật phòng học');
+  const credits = classroom?.course.credits || 0;
+  const totalLessons = classroom?.course.totalLessons || lessons.length;
+  const description = classroom?.course.description || t('classroom.descriptionFallback', 'Khóa học chưa có mô tả.');
 
   return (
     <div className="min-h-screen bg-gray-50" data-locale={locale}>
@@ -70,18 +74,15 @@ export default async function ClassroomPage({ params }: PageProps) {
               <div className="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded-full inline-block mb-2">{courseCode}</div>
               <h1 className="text-2xl font-bold text-gray-900">{courseName}</h1>
               <p className="text-gray-600 mt-1">{instructor} · {email}</p>
-              <p className="text-sm text-gray-600 mt-2 max-w-3xl">
-                Nghiên cứu các cấu trúc dữ liệu và giải thuật cơ bản, phân tích độ phức tạp.
-              </p>
+              <p className="text-sm text-gray-600 mt-2 max-w-3xl">{description}</p>
             </div>
             <div className="w-full md:w-64">
-              <div className="flex items-center justify-between text-sm text-gray-700 mb-2">
-                <span>{t('stats.learningProgress', 'Tiến độ học tập')}</span>
-                <span className="font-semibold">{progress}%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="h-2 rounded-full bg-black" style={{ width: `${progress}%` }} />
-              </div>
+              <ClassroomProgress
+                courseId={id}
+                totalLessons={totalLessons}
+                initialProgress={progress}
+                progressDetails={progressDetails}
+              />
             </div>
           </div>
 
@@ -93,8 +94,12 @@ export default async function ClassroomPage({ params }: PageProps) {
 
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              {/* Tabs: Nội dung / Tài nguyên / Bài tập lý thuyết / Bài tập thực hành */}
-              <ClassroomTabs weeks={mockWeeks} exercises={exercises} courseId={id} messages={messages} />
+              <ClassroomTabs
+                weeks={weeks}
+                resources={resources}
+                courseId={id}
+                messages={messages}
+              />
             </div>
 
             <div className="space-y-4">

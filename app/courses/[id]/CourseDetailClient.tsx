@@ -1,11 +1,14 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, MapPin, Users, Tag, Share2, BookOpen, Clock } from 'lucide-react';
 import type { Course } from '@/lib/api/courses';
 import { enrollCourse } from '@/lib/api/enrollments';
+import { getMyEnrollments } from '@/lib/api/enrollments';
+import { ApiError } from '@/lib/shared/utils/api';
 import { createTranslator } from '@/lib/shared/utils/translator';
 import { ROUTES } from '@/lib/shared/constants/routeres';
 import { useToast } from '@/app/hooks/useToast';
@@ -18,6 +21,8 @@ interface CourseDetailClientProps {
 
 export default function CourseDetailClient({ course, messages, locale }: CourseDetailClientProps) {
   const toast = useToast();
+  const router = useRouter();
+  const pathname = usePathname();
   const rawImage = course.image?.trim();
   const imageSrc = rawImage
     ? rawImage.startsWith('http') || rawImage.startsWith('/')
@@ -31,6 +36,24 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    let isMounted = true;
+    const checkEnrollment = async () => {
+      try {
+        const enrollments = await getMyEnrollments();
+        if (!isMounted) return;
+        const matched = enrollments.some((e) => String(e.courseId) === String(course.id));
+        if (matched) setIsEnrolled(true);
+      } catch (err) {
+      }
+    };
+
+    checkEnrollment();
+    return () => {
+      isMounted = false;
+    };
+  }, [course.id]);
+
   const seatsAvailable = useMemo(() => (course.capacity ?? 0) - (course.enrolled ?? 0), [course.capacity, course.enrolled]);
 
   const handleEnroll = async () => {
@@ -41,9 +64,14 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
       setIsEnrolled(true);
       toast.success(t('enrollDialog.success', 'Đăng ký môn học thành công'));
     } catch (err: unknown) {
+      if (err instanceof ApiError && err.status === 401) {
+        toast.error(t('enrollDialog.authRequired', 'Bạn cần đăng nhập để đăng ký')); 
+        router.push(`${ROUTES.LOGIN}?redirect=${encodeURIComponent(pathname || ROUTES.COURSE_DETAIL(String(course.id)))}`);
+        return;
+      }
       const msg =
-        err && typeof err === 'object' && 'message' in err && typeof (err as any).message === 'string'
-          ? (err as any).message
+        err && typeof err === 'object' && 'message' in err && typeof (err).message === 'string'
+          ? (err).message
           : t('enrollDialog.failure', 'Đăng ký thất bại');
       setError(msg);
       toast.error(msg);
@@ -55,7 +83,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
   return (
     <div className="min-h-screen bg-gray-50" data-locale={locale}>
       <div className="max-w-6xl mx-auto px-6 py-10">
-        {/* Breadcrumbs */}
         <nav className="text-sm text-gray-500 mb-4">
           <Link href={ROUTES.HOME} className="hover:underline">{t('nav.home', 'Trang chủ')}</Link>
           <span className="px-2">/</span>
@@ -64,7 +91,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
           <span className="text-gray-900 font-semibold">{course.name}</span>
         </nav>
 
-        {/* Header */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
           <div className="relative h-60 md:h-72 lg:h-96">
             <Image src={imageSrc} alt={course.name} fill className="object-cover" />
@@ -98,7 +124,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <main className="lg:col-span-2 space-y-6">
-            {/* Overview */}
             <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between">
                 <h2 className="text-xl font-bold text-gray-900">{t('courseDetail.overview','Overview')}</h2>
@@ -109,7 +134,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
                 {course.description ?? <span className="text-gray-400">{t('courseDetail.noData','No description available')}</span>}
               </div>
 
-              {/* Learning objectives placeholder or syllabus */}
               <div className="mt-6">
                 <h3 className="text-sm font-semibold text-gray-700 mb-2">{t('courseDetail.learningObjectives','Learning objectives')}</h3>
                 {course.syllabus && course.syllabus.length > 0 ? (
@@ -131,7 +155,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               </div>
             </section>
 
-            {/* Syllabus */}
             <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">{t('courseDetail.syllabus','Syllabus')}</h3>
@@ -139,7 +162,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               </div>
 
               <div className="mt-4 space-y-2">
-                {/* If there's a real syllabus, render it; otherwise show sample */}
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <div className="text-sm font-medium text-gray-700">{t('courseDetail.syllabusItem1','Introduction & Setup')}</div>
@@ -157,7 +179,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
           </main>
 
           <aside className="space-y-6">
-            {/* Enroll CTA */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex flex-col gap-3">
                 <div className="text-sm text-gray-600">{t('courseDetail.seats','Seats available')}</div>
@@ -178,7 +199,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               </div>
             </div>
 
-            {/* Instructor */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h4 className="text-lg font-semibold text-gray-900 mb-3">{t('courseDetail.instructor','Instructor')}</h4>
               <div className="flex items-center gap-3">
@@ -190,7 +210,6 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
               </div>
             </div>
 
-            {/* Tags */}
             {course.tags && course.tags.length > 0 && (
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h4 className="text-sm font-semibold text-gray-700 mb-3">{t('courseDetail.tags','Tags')}</h4>

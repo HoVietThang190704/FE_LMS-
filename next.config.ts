@@ -7,8 +7,9 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "5000",
-        pathname: "/uploads/local/posts/**",
+        pathname: "/uploads/**",
       },
+      // Allow Cloudinary-hosted images
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
