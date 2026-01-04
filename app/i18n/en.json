@@ -395,5 +395,95 @@
     "hideHistory": "Hide history",
     "showHistory": "Show history",
     "submissionHistory": "Submission History"
+  },
+  "supportCenter": {
+    "meta": {
+      "title": "Support Center",
+      "description": "Submit academic, technical, or billing tickets and track SLA-backed follow ups."
+    },
+    "hero": {
+      "eyebrow": "Support mission desk",
+      "title": "Every ticket routes with an SLA",
+      "subtitle": "Ops engineers monitor 24/7 so incidents never block your learning rhythm.",
+      "metrics": [
+        { "label": "First response", "value": "< 15 min", "description": "Business hours" },
+        { "label": "Tickets resolved", "value": "98%", "description": "Closed within SLA last week" },
+        { "label": "Support channels", "value": "4", "description": "In-app, Zalo, Email, Hotline" }
+      ],
+      "quickLinks": [
+        { "title": "Live chat", "description": "Connect with coordinators on duty", "cta": "Open chat" },
+        { "title": "Hotline 1900 88 99", "description": "Escalate urgent classroom incidents", "cta": "Call now" },
+        { "title": "Playbook library", "description": "Browse SOPs and self-serve videos", "cta": "View docs" }
+      ]
+    },
+    "form": {
+      "title": "Create support ticket",
+      "tagline": "Support intake form",
+      "subtitle": "Give us clear context so routing stays accurate.",
+      "subjectLabel": "Ticket subject",
+      "subjectPlaceholder": "Ex: Cannot enter 8PM class on 05/01",
+      "subjectRequired": "This field is required.",
+      "detailsRequired": "Please describe the issue.",
+      "typeLabel": "Issue category",
+      "priorityLabel": "Priority",
+      "priorityHelper": "Pick the impact level to your classes and learners.",
+      "detailsLabel": "Detailed description",
+      "detailsPlaceholder": "Explain the steps, system messages, and learner impact...",
+      "channelLabel": "Preferred response channel",
+      "attachmentsLabel": "Reference links",
+      "attachmentPlaceholder": "https://drive.google.com/...",
+      "attachmentsHint": "Share Google Drive, Github, or public screenshots.",
+      "addAttachment": "Add link",
+      "shareLabel": "Share with extended support teams",
+      "shareDescription": "Allow escalation to tech, finance, or pedagogy specialists.",
+      "submit": "Submit ticket",
+      "submitting": "Sending...",
+      "successTitle": "Ticket received",
+      "successDescription": "We logged your ticket and will update you shortly.",
+      "errorTitle": "Submission failed",
+      "errorDescription": "Please retry or call the hotline for urgent outages.",
+      "referenceLabel": "Reference",
+      "categories": [
+        { "value": "support", "label": "Academic support", "description": "Schedules, resources, attendance" },
+        { "value": "bug", "label": "Technical incident", "description": "Access, video, quiz, upload issues" },
+        { "value": "question", "label": "General question", "description": "Process or permission clarification" },
+        { "value": "refund", "label": "Billing & invoices", "description": "Receipts, refunds, voucher issues" },
+        { "value": "feature", "label": "Feature request", "description": "Product improvement ideas" },
+        { "value": "other", "label": "Other", "description": "Special scenarios" }
+      ],
+      "priorities": [
+        { "value": "low", "label": "Normal", "description": "Low impact, resolve within 24h" },
+        { "value": "medium", "label": "Priority", "description": "Affects one class, resolve within 8h" },
+        { "value": "high", "label": "Urgent", "description": "Multi-class impact, respond within 2h" },
+        { "value": "urgent", "label": "Outage", "description": "Class cannot run, call hotline" }
+      ],
+      "channels": [
+        { "value": "in-app", "label": "In-app messages", "description": "Get push and email alerts" },
+        { "value": "email", "label": "Email", "description": "Great when you need a written log" },
+        { "value": "call", "label": "Phone call", "description": "We will reach your registered number" }
+      ]
+    },
+    "insights": {
+      "title": "Faster resolution tips",
+      "items": [
+        { "title": "Add class codes", "description": "Course IDs and instructors speed up routing." },
+        { "title": "Attach evidence", "description": "Screenshots or videos cut reproduction time by 60%." },
+        { "title": "Share deadlines", "description": "Let us know if a live session is at risk." }
+      ],
+      "timelineTitle": "Resolution journey",
+      "timeline": [
+        { "label": "Intake", "description": "Ticket is logged and auto-tagged in under 2 minutes." },
+        { "label": "Assessment", "description": "Coordinator reviews impact and priority." },
+        { "label": "Execution", "description": "Hand-off to the best-fit tech or academic pod." },
+        { "label": "Update", "description": "We send progress and next steps back to you." }
+      ],
+      "commitmentTitle": "Our commitment",
+      "commitmentSubtitle": "Every ticket is SLA tracked and learner data stays protected.",
+      "commitmentItems": [
+        { "title": "15-min SLA", "description": "First human response within 15 minutes of business hours." },
+        { "title": "Transparent logs", "description": "See every support action in your timeline." },
+        { "title": "Data safety", "description": "We only share data with your consent." }
+      ]
+    }
   }
 }

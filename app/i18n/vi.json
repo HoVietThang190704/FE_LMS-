@@ -394,5 +394,95 @@
     "hideHistory": "Ẩn lịch sử",
     "showHistory": "Xem lịch sử",
     "submissionHistory": "Lịch sử nộp bài"
+  },
+  "supportCenter": {
+    "meta": {
+      "title": "Trung tâm hỗ trợ",
+      "description": "Gửi yêu cầu học vụ, kỹ thuật hoặc thanh toán để đội ngũ EDUVN xử lý có SLA."
+    },
+    "hero": {
+      "eyebrow": "Support mission desk",
+      "title": "Mọi ticket đều được định tuyến có SLA",
+      "subtitle": "Đội vận hành trực 24/7 để bảo vệ trải nghiệm học tập và tránh gián đoạn lớp học.",
+      "metrics": [
+        { "label": "Phản hồi đầu tiên", "value": "< 15’", "description": "Giờ hành chính" },
+        { "label": "Tickets xử lý", "value": "98%", "description": "Đóng trong SLA tuần trước" },
+        { "label": "Kênh hỗ trợ", "value": "4 kênh", "description": "In-app, Zalo, Email, Hotline" }
+      ],
+      "quickLinks": [
+        { "title": "Chat trực tiếp", "description": "Kết nối điều phối viên đang trực", "cta": "Mở chat" },
+        { "title": "Hotline 1900 88 99", "description": "Ưu tiên sự cố làm gián đoạn lớp", "cta": "Gọi ngay" },
+        { "title": "Thư viện hướng dẫn", "description": "Tự tra cứu SOP và video", "cta": "Xem ngay" }
+      ]
+    },
+    "form": {
+      "title": "Tạo ticket hỗ trợ",
+      "tagline": "Biểu mẫu hỗ trợ",
+      "subtitle": "Điền thông tin rõ ràng để hệ thống định tuyến chính xác.",
+      "subjectLabel": "Tiêu đề yêu cầu",
+      "subjectPlaceholder": "VD: Không vào được lớp tối 05/01",
+      "subjectRequired": "Vui lòng nhập trường này.",
+      "detailsRequired": "Vui lòng mô tả vấn đề.",
+      "typeLabel": "Nhóm vấn đề",
+      "priorityLabel": "Mức ưu tiên",
+      "priorityHelper": "Chọn mức ảnh hưởng đến lớp học và học viên.",
+      "detailsLabel": "Mô tả chi tiết",
+      "detailsPlaceholder": "Mô tả thao tác đã thực hiện, thông báo hệ thống và tác động đến lớp.",
+      "channelLabel": "Kênh phản hồi mong muốn",
+      "attachmentsLabel": "Link minh chứng",
+      "attachmentPlaceholder": "https://drive.google.com/...",
+      "attachmentsHint": "Chấp nhận Google Drive, Github hoặc hình ảnh công khai.",
+      "addAttachment": "Thêm link",
+      "shareLabel": "Chia sẻ cho đội hỗ trợ mở rộng",
+      "shareDescription": "Cho phép leo thang sang các nhóm chuyên sâu (kỹ thuật, tài chính).",
+      "submit": "Gửi ticket",
+      "submitting": "Đang gửi...",
+      "successTitle": "Đã nhận ticket",
+      "successDescription": "Chúng tôi sẽ phản hồi bản cập nhật đầu tiên trong thời gian sớm nhất.",
+      "errorTitle": "Không thể gửi",
+      "errorDescription": "Vui lòng thử lại hoặc chuyển sang hotline nếu đây là sự cố khẩn cấp.",
+      "referenceLabel": "Mã tham chiếu",
+      "categories": [
+        { "value": "support", "label": "Hỗ trợ học tập", "description": "Lịch học, tài nguyên, điểm danh" },
+        { "value": "bug", "label": "Sự cố kỹ thuật", "description": "Lỗi truy cập, video, quiz, upload" },
+        { "value": "question", "label": "Tư vấn chung", "description": "Cần giải thích quy trình hoặc quyền truy cập" },
+        { "value": "refund", "label": "Thanh toán & hóa đơn", "description": "Biên lai, hoàn phí, mã giảm giá" },
+        { "value": "feature", "label": "Đề xuất tính năng", "description": "Ý tưởng cải tiến sản phẩm" },
+        { "value": "other", "label": "Khác", "description": "Những trường hợp đặc biệt" }
+      ],
+      "priorities": [
+        { "value": "low", "label": "Thường", "description": "Ảnh hưởng thấp, xử lý trong 24h" },
+        { "value": "medium", "label": "Ưu tiên", "description": "Ảnh hưởng một lớp, xử lý trong 8h" },
+        { "value": "high", "label": "Khẩn cấp", "description": "Ảnh hưởng nhiều lớp, phản hồi trong 2h" },
+        { "value": "urgent", "label": "Ngừng hoạt động", "description": "Lớp không thể diễn ra, liên hệ hotline" }
+      ],
+      "channels": [
+        { "value": "in-app", "label": "Tin nhắn trong ứng dụng", "description": "Nhận thông báo push + email" },
+        { "value": "email", "label": "Email", "description": "Ưu tiên nếu bạn cần lịch sử trao đổi" },
+        { "value": "call", "label": "Điện thoại", "description": "Đội ngũ sẽ gọi lại theo số đã đăng ký" }
+      ]
+    },
+    "insights": {
+      "title": "Gợi ý xử lý nhanh",
+      "items": [
+        { "title": "Ghi rõ mã lớp", "description": "Thông tin về lớp, giảng viên giúp định tuyến chính xác." },
+        { "title": "Đính kèm ảnh/video", "description": "Bằng chứng giúp chúng tôi tái hiện vấn đề nhanh hơn 60%." },
+        { "title": "Cập nhật hạn chót", "description": "Cho chúng tôi biết nếu có deadline sát để ưu tiên ca trực." }
+      ],
+      "timelineTitle": "Lộ trình xử lý",
+      "timeline": [
+        { "label": "Ghi nhận", "description": "Hệ thống tạo ticket và phân loại trong vòng 2 phút." },
+        { "label": "Đánh giá", "description": "Điều phối viên xác định tác động và mức ưu tiên." },
+        { "label": "Xử lý", "description": "Chuyển giao tới nhóm kỹ thuật/học vụ phù hợp." },
+        { "label": "Phản hồi", "description": "Gửi cập nhật và bước tiếp theo cho bạn." }
+      ],
+      "commitmentTitle": "Cam kết hỗ trợ",
+      "commitmentSubtitle": "Mọi ticket đều được giám sát SLA và bảo mật thông tin học viên.",
+      "commitmentItems": [
+        { "title": "SLA 15 phút", "description": "Phản hồi đầu tiên trong 15 phút giờ hành chính." },
+        { "title": "Nhật ký minh bạch", "description": "Theo dõi lịch sử thao tác của đội hỗ trợ theo thời gian." },
+        { "title": "Bảo vệ dữ liệu", "description": "Chỉ chia sẻ thông tin khi bạn cho phép." }
+      ]
+    }
   }
 }
