@@ -1,4 +1,5 @@
 import Navbar from '@/components/header/Navbar';
+import SupportChatWidget from '@/components/support/SupportChatWidget';
 
 export default function MainLayout({
   children,
@@ -9,6 +10,7 @@ export default function MainLayout({
     <div>
       <Navbar />
       {children}
+      <SupportChatWidget />
     </div>
   );
 }
