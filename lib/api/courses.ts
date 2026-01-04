@@ -9,6 +9,8 @@ export type Course = {
   description?: string;
   tags?: string[];
   status?: 'active' | 'archived';
+  visibility?: 'public' | 'private';
+  requireApproval?: boolean;
   credits?: number;
   instructor?: string;
   schedule?: string;
@@ -35,7 +37,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
     const body = await res.json();
 
     // Backend uses { data, meta }
-    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; image?: string; createdAt?: string; updatedAt?: string; isEnrolled?: boolean; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number };
+    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; isEnrolled?: boolean; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number };
     return {
       data: (body.data || []).map((c: RawCourse) => ({
         id: c._id || c.id || String(c.code || ''),
@@ -44,6 +46,8 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
         description: c.description,
         tags: c.tags,
         status: c.status,
+        visibility: c.visibility,
+        requireApproval: c.requireApproval,
         image: c.image,
         credits: c.credits as number | undefined,
         instructor: c.instructor,
@@ -65,7 +69,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
 
 export async function getPublicCourseById(id: string): Promise<Course | null> {
   try {
-    const response = await fetchFromApi<{ _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; image?: string; createdAt?: string; updatedAt?: string; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number; syllabus?: SyllabusItem[]; isEnrolled?: boolean }>(`/api/courses/public/${id}`);
+    const response = await fetchFromApi<{ _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number; syllabus?: SyllabusItem[]; isEnrolled?: boolean }>(`/api/courses/public/${id}`);
     const c = response;
 
     return {
@@ -75,6 +79,8 @@ export async function getPublicCourseById(id: string): Promise<Course | null> {
       description: c.description,
       tags: c.tags,
       status: c.status,
+      visibility: c.visibility,
+      requireApproval: c.requireApproval,
       image: c.image,
       credits: c.credits,
       instructor: c.instructor,

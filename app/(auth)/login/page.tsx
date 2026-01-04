@@ -43,6 +43,7 @@ export default function LoginPage() {
 
     if (payload.accessToken) {
       window.localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, payload.accessToken);
+      document.cookie = `edu.lms.accessToken=${payload.accessToken}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
     }
 
     if (payload.refreshToken) {

@@ -9,6 +9,7 @@ import RightPanel from './components/RightPanel';
 import ClassCard from '@/components/card/ClassCard';
 import CourseCard from '@/components/card/CourseCard';
 import { ROUTES } from '@/lib/shared/constants/routeres';
+import JoinByInvite from './components/JoinByInvite';
 
 type HomeUIProps = {
   locale: 'en' | 'vi';
@@ -34,12 +35,15 @@ export default function HomeUI({ locale, t, messages, user, stats, classes, assi
               <h2 className="text-xl font-bold text-gray-900">{t('publicCourses.title')}</h2>
               <p className="text-sm text-gray-500">{t('publicCourses.subtitle', { count: courses.length })}</p>
             </div>
-            <Link
-              href={ROUTES.COURSES}
-              className="text-sm font-semibold text-blue-600 hover:text-blue-800"
-            >
-              {t('actions.viewCourses')}
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <JoinByInvite buttonLabel={t('publicCourses.joinByCode') || 'Tham gia bằng mã mời'} />
+              <Link
+                href={ROUTES.COURSES}
+                className="text-sm font-semibold text-blue-600 hover:text-blue-800"
+              >
+                {t('actions.viewCourses')}
+              </Link>
+            </div>
           </div>
 
           {courses.length > 0 ? (

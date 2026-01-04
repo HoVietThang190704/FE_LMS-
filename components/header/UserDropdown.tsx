@@ -19,19 +19,22 @@ type Props = {
 
 export default function UserDropdown({ name, avatarUrl, isAuthenticated = false }: Props) {
   const router = useRouter();
-  const messages = getMessages(DEFAULT_LOCALE) as any;
+  const messages = getMessages(DEFAULT_LOCALE) as Record<string, unknown>;
+  const userMenu = (messages.userMenu ?? {}) as Record<string, string | undefined>;
 
   const displayName = name?.trim()
     ? name
     : isAuthenticated
-      ? messages.userMenu.userFallback
-      : messages.userMenu.guest;
+      ? (userMenu.userFallback || 'User')
+      : (userMenu.guest || 'Guest');
 
   const handleLogout = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.USER);
+      // Xóa cookie
+      document.cookie = 'edu.lms.accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       window.dispatchEvent(new Event(AUTH_SESSION_EVENT));
     }
     router.push(ROUTES.LOGIN);
@@ -70,7 +73,7 @@ export default function UserDropdown({ name, avatarUrl, isAuthenticated = false 
           role="menuitem"
         >
           <User size={16} />
-          {messages.userMenu.login}
+          {userMenu.login || 'Đăng nhập'}
         </button>
       </Dropdown>
     );
@@ -80,33 +83,33 @@ export default function UserDropdown({ name, avatarUrl, isAuthenticated = false 
     <Dropdown trigger={trigger} align="end">
       <Link href={ROUTES.MY_PROFILE} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" role="menuitem">
         <User size={16} className="text-gray-500" />
-        {messages.userMenu.profile}
+        {userMenu.profile || 'Hồ sơ cá nhân'}
       </Link>
       <Link href={ROUTES.SETTINGS} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" role="menuitem">
         <Settings size={16} className="text-gray-500" />
-        {messages.userMenu.settings}
+        {userMenu.settings || 'Cài đặt'}
       </Link>
 
       <Link href={ROUTES.NOTIFICATIONS} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" role="menuitem">
         <Bell size={16} className="text-gray-500" />
-        {messages.userMenu.notifications}
+        {userMenu.notifications || 'Thông báo'}
       </Link>
 
       <Link href={ROUTES.CHANGE_PASSWORD} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" role="menuitem">
         <Key size={16} className="text-gray-500" />
-        {messages.userMenu.changePassword}
+        {userMenu.changePassword || 'Đổi mật khẩu'}
       </Link>
 
       <Link href={ROUTES.SUPPORT} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors" role="menuitem">
         <HelpCircle size={16} className="text-gray-500" />
-        {messages.userMenu.support}
+        {userMenu.support || 'Trợ giúp'}
       </Link>
 
       <div className="border-t border-gray-100 my-1" />
 
       <button onClick={handleLogout} className="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors" role="menuitem">
         <LogOut size={16} />
-        {messages.userMenu.logout}
+        {userMenu.logout || 'Đăng xuất'}
       </button>
     </Dropdown>
   );

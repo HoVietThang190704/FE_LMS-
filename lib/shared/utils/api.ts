@@ -1,7 +1,6 @@
 const DEFAULT_API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
 const DEFAULT_FALLBACK_BASE =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
-  process.env.NEXT_PUBLIC_APP_URL ||
   'http://localhost:5000';
 
 const BASE_URL = DEFAULT_API_BASE || DEFAULT_FALLBACK_BASE;
@@ -34,12 +33,26 @@ export function buildApiUrl(path: string): string {
   return new URL(path, BASE_URL).toString();
 }
 
-export async function fetchFromApi<T>(path: string, options: RequestInit = {}): Promise<T> {
+export interface FetchOptions extends RequestInit {
+  token?: string | null;
+}
+
+export async function fetchFromApi<T>(path: string, options: FetchOptions = {}): Promise<T> {
   const url = buildApiUrl(path);
+  const { token: customToken, ...restOptions } = options;
+  
+  // Ưu tiên token được truyền vào, sau đó mới lấy từ localStorage
+  const token = customToken ?? (typeof window !== 'undefined' ? localStorage.getItem('edu.lms.accessToken') : null);
+  const headers: HeadersInit = {
+    ...(restOptions.headers || {}),
+    ...(token && !(restOptions.headers && 'Authorization' in restOptions.headers) ? { Authorization: `Bearer ${token}` } : {}),
+  };
+
   const init: RequestInit = {
     cache: 'no-store',
     credentials: 'include',
-    ...options,
+    ...restOptions,
+    headers,
   };
 
   const response = await fetch(url, init);
