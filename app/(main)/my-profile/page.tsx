@@ -246,7 +246,7 @@ function CreatedCoursesTab({
                 <ChevronRight size={16} />
               </Link>
               <Link
-                href={`/courses/${course.id}`}
+                href={`/my-profile/courses/${course.id}/students`}
                 className="px-3 py-2 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition-colors"
               >
                 {messages.myProfile?.view || 'Xem'}
