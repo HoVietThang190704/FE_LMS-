@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { BookOpen, Home, Award, BarChart3 } from 'lucide-react';
 import UserDropdown from '@/components/header/UserDropdown';
+import HeaderSearchBar from '@/components/search/HeaderSearchBar';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { IMAGES } from '@/lib/shared/constants/images';
@@ -59,7 +60,8 @@ export default function Navbar() {
               );
             })}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            <HeaderSearchBar />
             <UserDropdown name={displayName} avatarUrl={user?.avatar} isAuthenticated={Boolean(user)} />
           </div>
         </div>
