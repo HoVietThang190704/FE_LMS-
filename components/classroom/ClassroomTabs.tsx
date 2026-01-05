@@ -36,14 +36,25 @@ export default function ClassroomTabs({
 
   // hydrate completion status from localStorage (shared with học bài page)
   useEffect(() => {
-    if (!courseId || typeof window === 'undefined') return;
-    try {
-      const stored = localStorage.getItem(`lesson-progress:${courseId}`);
-      setProgressMap(stored ? JSON.parse(stored) : {});
-    } catch (error) {
-      console.warn('[ClassroomTabs] cannot read progress', error);
-      setProgressMap({});
-    }
+    if (typeof window === 'undefined') return;
+
+    const frame = requestAnimationFrame(() => {
+      if (!courseId) {
+        setProgressMap({});
+        return;
+      }
+      try {
+        const stored = localStorage.getItem(`lesson-progress:${courseId}`);
+        setProgressMap(stored ? JSON.parse(stored) : {});
+      } catch (error) {
+        console.warn('[ClassroomTabs] cannot read progress', error);
+        setProgressMap({});
+      }
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, [courseId]);
 
   const resourcesByLesson = useMemo(() => {

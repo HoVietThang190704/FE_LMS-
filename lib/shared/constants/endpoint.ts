@@ -14,7 +14,8 @@ const buildExternal = (path: string) => {
 export const INTERNAL_API_ENDPOINTS = {
 	AUTH: {
 		LOGIN: '/api/login',
-		REGISTER: '/api/register'
+		REGISTER: '/api/register',
+		CHANGE_PASSWORD: '/api/auth/change-password'
 	},
 	USER: {
 		PROFILE: '/api/user/profile'
@@ -26,7 +27,8 @@ export const EXTERNAL_API_ENDPOINTS = {
 		LOGIN: buildExternal('api/auth/login'),
 		REGISTER: buildExternal('api/auth/register'),
 		REFRESH: buildExternal('api/auth/refresh'),
-		LOGOUT: buildExternal('api/auth/logout')
+		LOGOUT: buildExternal('api/auth/logout'),
+		CHANGE_PASSWORD: buildExternal('api/auth/change-password')
 	},
 	USER: {
 		PROFILE: buildExternal('api/users/me/profile'),

@@ -22,18 +22,21 @@ const parseStoredUser = (raw: string | null): StoredUser | null => {
   }
 };
 
+const readStoredUser = () => {
+  if (typeof window === 'undefined') return null;
+  const storedUser = window.localStorage.getItem(STORAGE_KEYS.USER);
+  return parseStoredUser(storedUser);
+};
+
 export const useCurrentUser = () => {
-  const [user, setUser] = useState<StoredUser | null>(null);
+  const [user, setUser] = useState<StoredUser | null>(() => readStoredUser());
 
   const syncFromStorage = useCallback(() => {
-    if (typeof window === 'undefined') return;
-    const storedUser = window.localStorage.getItem(STORAGE_KEYS.USER);
-    setUser(parseStoredUser(storedUser));
+    setUser(readStoredUser());
   }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    syncFromStorage();
 
     const handleStorage = (event: StorageEvent) => {
       if (!event.key || storageKeySet.has(event.key)) {

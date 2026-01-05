@@ -484,5 +484,56 @@
         { "title": "Bảo vệ dữ liệu", "description": "Chỉ chia sẻ thông tin khi bạn cho phép." }
       ]
     }
+  },
+  "settingsPage": {
+    "hero": {
+      "badge": "Trung tâm bảo mật",
+      "title": "Giữ an toàn cho lớp học số",
+      "subtitle": "Đổi mật khẩu định kỳ để bảo vệ bài nộp, điểm số và phản hồi từ giảng viên.",
+      "statusPill": "Giám sát rủi ro thời gian thực",
+      "lastUpdatedLabel": "Cập nhật gần nhất",
+      "neverUpdated": "Chưa từng cập nhật",
+      "activeDevicesTitle": "Thiết bị đang hoạt động",
+      "activeDevicesHelper": "Đồng bộ giữa các phiên trình duyệt"
+    },
+    "changePassword": {
+      "title": "Đổi mật khẩu",
+      "description": "Mật khẩu mạnh có tối thiểu 8 ký tự và kết hợp chữ, số, ký tự đặc biệt.",
+      "currentPasswordLabel": "Mật khẩu hiện tại",
+      "newPasswordLabel": "Mật khẩu mới",
+      "confirmPasswordLabel": "Xác nhận mật khẩu mới",
+      "requirements": [
+        "Tối thiểu 8 ký tự",
+        "Có số hoặc ký tự đặc biệt",
+        "Không trùng mật khẩu gần đây"
+      ],
+      "strengthLabel": "Độ mạnh mật khẩu",
+      "strength": {
+        "weak": "Yếu",
+        "medium": "Trung bình",
+        "strong": "Mạnh"
+      },
+      "submit": "Cập nhật mật khẩu",
+      "submitting": "Đang cập nhật...",
+      "success": "Đổi mật khẩu thành công",
+      "error": "Không thể đổi mật khẩu.",
+      "errors": {
+        "currentRequired": "Vui lòng nhập mật khẩu hiện tại.",
+        "newRequired": "Vui lòng nhập mật khẩu mới.",
+        "mismatch": "Mật khẩu xác nhận không khớp.",
+        "samePassword": "Mật khẩu mới phải khác mật khẩu cũ."
+      }
+    },
+    "tips": {
+      "title": "Lưu ý bảo mật",
+      "subtitle": "Thói quen nhỏ giúp tránh rủi ro lớn.",
+      "items": [
+        "Bật xác thực hai lớp khi khả dụng.",
+        "Đăng xuất khỏi thiết bị dùng chung.",
+        "Rà soát phiên đăng nhập mỗi tháng."
+      ],
+      "supportCta": "Cần hỗ trợ lấy lại tài khoản?"
+    },
+    "signInCta": "Đăng nhập để tiếp tục"
   }
 }

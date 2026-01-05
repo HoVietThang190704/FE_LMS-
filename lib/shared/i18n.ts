@@ -11,19 +11,37 @@ export function detectBrowserLocale(): SupportedLocale {
 
 export const useT = (locale?: SupportedLocale) => {
   const resolved = locale ?? detectBrowserLocale();
-  const messages = useMemo(() => getMessages(resolved) as Record<string, any>, [resolved]);
+  const messages = useMemo<Record<string, unknown>>(
+    () => getMessages(resolved) as Record<string, unknown>,
+    [resolved]
+  );
 
   const t = (path: string, params?: Record<string, string | number>) => {
     const parts = path.split('.');
-    let cur: any = messages;
-    for (const p of parts) {
-      cur = cur?.[p];
-      if (cur === undefined) return path;
+    let current: unknown = messages;
+
+    for (const part of parts) {
+      if (typeof current !== 'object' || current === null) {
+        return path;
+      }
+
+      current = (current as Record<string, unknown>)[part];
+      if (current === undefined) return path;
     }
-    if (typeof cur === 'string' && params) {
-      return cur.replace(/\{(\w+)\}/g, (_m, k) => String(params[k] ?? ''));
+
+    if (typeof current === 'string' && params) {
+      return current.replace(/\{(\w+)\}/g, (_match, key) => String(params[key] ?? ''));
     }
-    return typeof cur === 'string' ? cur : JSON.stringify(cur);
+
+    if (typeof current === 'string') {
+      return current;
+    }
+
+    if (typeof current === 'object' && current !== null) {
+      return JSON.stringify(current);
+    }
+
+    return path;
   };
 
   return { t, locale: resolved } as const;

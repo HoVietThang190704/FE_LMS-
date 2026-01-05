@@ -3,16 +3,16 @@ import ExercisePage from '@/components/exercises/ExercisePage';
 import { getExerciseById } from '@/lib/services/exercises/exercise.service';
 
 interface ExerciseDetailPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default async function ExerciseDetailPage({ params }: ExerciseDetailPageProps) {
-  const { id } = await params;
+  const { id } = params;
+  const exercise = await getExerciseById(id).catch(() => null);
 
-  try {
-    const exercise = await getExerciseById(id);
-    return <ExercisePage exercise={exercise} />;
-  } catch (error) {
+  if (!exercise) {
     notFound();
   }
+
+  return <ExercisePage exercise={exercise} />;
 }

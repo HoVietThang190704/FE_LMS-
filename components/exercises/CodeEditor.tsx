@@ -2,13 +2,13 @@
 
 import React, { useState, useCallback } from 'react';
 import { Play, RotateCcw } from 'lucide-react';
-import type { Exercise, CodeLanguage } from '@/lib/types/exercises';
+import type { Exercise, CodeLanguage, SubmissionResult } from '@/lib/types/exercises';
 import { submitSolution, getCodeTemplate } from '@/lib/services/exercises/compiler.service';
 import LanguageSelector from './LanguageSelector';
 
 interface CodeEditorProps {
   exercise: Exercise;
-  onTestResults: (results: any) => void;
+  onTestResults: React.Dispatch<React.SetStateAction<SubmissionResult | null>>;
   onRunning: (isRunning: boolean) => void;
 }
 

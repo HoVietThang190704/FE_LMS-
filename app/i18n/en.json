@@ -485,5 +485,56 @@
         { "title": "Data safety", "description": "We only share data with your consent." }
       ]
     }
+  },
+  "settingsPage": {
+    "hero": {
+      "badge": "Security center",
+      "title": "Protect every assignment submission",
+      "subtitle": "Rotate credentials often so projects, grades, and instructor feedback stay safe.",
+      "statusPill": "Realtime breach monitoring",
+      "lastUpdatedLabel": "Last updated",
+      "neverUpdated": "Not updated yet",
+      "activeDevicesTitle": "Active devices",
+      "activeDevicesHelper": "Synced across browser sessions"
+    },
+    "changePassword": {
+      "title": "Change password",
+      "description": "Use at least 8 characters mixing letters, numbers, and special symbols.",
+      "currentPasswordLabel": "Current password",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "requirements": [
+        "Minimum 8 characters",
+        "Add a number or symbol",
+        "Avoid recently used passwords"
+      ],
+      "strengthLabel": "Password strength",
+      "strength": {
+        "weak": "Weak",
+        "medium": "Fair",
+        "strong": "Strong"
+      },
+      "submit": "Update password",
+      "submitting": "Updating...",
+      "success": "Password updated successfully",
+      "error": "Unable to update password.",
+      "errors": {
+        "currentRequired": "Enter your current password.",
+        "newRequired": "Enter a new password.",
+        "mismatch": "Passwords do not match.",
+        "samePassword": "New password must be different."
+      }
+    },
+    "tips": {
+      "title": "Security reminders",
+      "subtitle": "Small habits make a big difference.",
+      "items": [
+        "Enable multi-factor authentication when available.",
+        "Sign out when using shared computers.",
+        "Review active sessions monthly."
+      ],
+      "supportCta": "Need help regaining access?"
+    },
+    "signInCta": "Sign in to continue"
   }
 }
