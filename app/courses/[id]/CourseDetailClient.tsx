@@ -125,13 +125,13 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <button className="inline-flex items-center gap-2 bg-white/10 text-white px-3 py-2 rounded-lg hover:bg-white/20 transition">
-                  <Share2 className="w-4 h-4" /> {t('courseDetail.share','Share')}
+              <div className="flex items-center gap-3 flex-nowrap">
+                <button className="inline-flex items-center gap-2 bg-white/10 text-white px-3 py-2 rounded-lg hover:bg-white/20 transition whitespace-nowrap">
+                  <Share2 className="w-4 h-4" /> <span className="hidden sm:inline">{t('courseDetail.share','Share')}</span>
                 </button>
-                <div className="bg-white rounded-lg p-3 text-sm text-gray-700">
-                  <div className="font-semibold text-lg">{course.enrolled ?? 0}/{course.capacity ?? '—'}</div>
-                  <div className="text-xs text-gray-500">{t('courseDetail.enrolled','Enrolled')}</div>
+                <div className="bg-white rounded-lg p-2 text-sm text-gray-700 min-w-[64px] text-center">
+                  <div className="font-semibold text-lg leading-none">{course.enrolled ?? 0}/{course.capacity ?? '—'}</div>
+                  <div className="text-xs text-gray-500 leading-none">{t('courseDetail.enrolled','Enrolled')}</div>
                 </div>
               </div>
             </div>

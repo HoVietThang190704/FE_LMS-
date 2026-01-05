@@ -278,7 +278,7 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
 
           <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
             <div className="grid gap-1">
-              <label className="text-sm font-medium text-slate-700">{t('createCourse.startDateLabel') ?? 'Ngày bắt đầu'}</label>
+              <label className="text-sm font-medium text-slate-700">Ngày bắt đầu</label>
               <input
                 type="datetime-local"
                 className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none"
@@ -287,7 +287,7 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
               />
             </div>
             <div className="grid gap-1">
-              <label className="text-sm font-medium text-slate-700">{t('createCourse.endDateLabel') ?? 'Ngày kết thúc'}</label>
+              <label className="text-sm font-medium text-slate-700">Ngày kết thúc</label>
               <input
                 type="datetime-local"
                 className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none"
@@ -351,7 +351,7 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
             </div>
           </div>
           <div className="grid gap-2 text-sm text-slate-700">
-            <span className="font-medium">{t('createCourse.visibilityHeading') ?? 'Chế độ hiển thị'}</span>
+            <span className="font-medium">Chế độ hiển thị</span>
             <label className="inline-flex items-center gap-2">
               <input
                 type="radio"

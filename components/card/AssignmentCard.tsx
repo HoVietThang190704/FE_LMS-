@@ -26,6 +26,22 @@ export default function AssignmentCard({
 
   const currentStatus = statusConfig[status];
 
+  // Format deadline to a readable local string, fallback to raw if invalid
+  const formattedDeadline = (() => {
+    if (!deadline) return '--';
+    const date = new Date(deadline);
+    if (Number.isNaN(date.getTime())) return deadline;
+    return new Intl.DateTimeFormat('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Ho_Chi_Minh',
+    }).format(date);
+  })();
+
   return (
     <div className="border-l-4 border-blue-500 bg-white rounded-r-lg shadow-sm p-4 hover:shadow-md transition-shadow">
       <h4 className="text-gray-900 font-semibold text-sm mb-2">{title}</h4>
@@ -34,7 +50,7 @@ export default function AssignmentCard({
         <div className="flex items-center gap-1 text-gray-500 text-xs">
           <Clock size={14} />
           <span>
-            {deadlineLabel}: {deadline}
+            {deadlineLabel}: {formattedDeadline}
           </span>
         </div>
         <span className={`${currentStatus.bg} ${currentStatus.color} text-xs font-medium px-2.5 py-1 rounded`}>
