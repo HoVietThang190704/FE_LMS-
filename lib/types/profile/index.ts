@@ -55,6 +55,9 @@ export interface QuizExercise {
   shuffleQuestions: boolean;
   shuffleOptions: boolean;
   showResultsImmediately: boolean;
+  startDate?: string;
+  endDate?: string;
+  isExpired?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -97,6 +100,13 @@ export interface PracticeExercise {
   courseCode?: string;
   title: string;
   description: string;
+export interface PracticeExercise {
+  id: string;
+  courseId: string;
+  courseName?: string;
+  courseCode?: string;
+  title: string;
+  description: string;
   order: number;
   difficulty: 'easy' | 'medium' | 'hard';
   language: string;
@@ -108,6 +118,9 @@ export interface PracticeExercise {
   sampleOutput?: string;
   timeLimit: number;
   memoryLimit: number;
+  startDate?: string;
+  endDate?: string;
+  isExpired?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

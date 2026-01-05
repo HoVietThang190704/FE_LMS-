@@ -20,6 +20,9 @@ export type Course = {
   image?: string;
   syllabus?: SyllabusItem[];
   isEnrolled?: boolean;
+  startDate?: string;
+  endDate?: string;
+  isExpired?: boolean;
 };
 
 export type CoursesResponse = {
@@ -37,7 +40,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
     const body = await res.json();
 
     // Backend uses { data, meta }
-    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; isEnrolled?: boolean; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number };
+    type RawCourse = { _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; isEnrolled?: boolean; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number; startDate?: string; endDate?: string; isExpired?: boolean };
     return {
       data: (body.data || []).map((c: RawCourse) => ({
         id: c._id || c.id || String(c.code || ''),
@@ -56,12 +59,14 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
         enrolled: c.enrolled,
         capacity: c.capacity,
         isEnrolled: Boolean(c.isEnrolled || (c.tags || []).includes('enrolled')),
+        startDate: c.startDate,
+        endDate: c.endDate,
+        isExpired: c.isExpired ?? (c.endDate ? new Date(c.endDate) < new Date() : false),
       })),
 
       meta: body.meta,
     };
   } catch (err) {
-    // Fallback to empty list on error — caller can decide to use local mocks if desired
     console.warn('[getCourses] fetch failed, returning empty array', err);
     return { data: [] };
   }
@@ -69,7 +74,7 @@ export async function getCourses({ page = 1, limit = 50, keyword = '' } = {}): P
 
 export async function getPublicCourseById(id: string): Promise<Course | null> {
   try {
-    const response = await fetchFromApi<{ _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number; syllabus?: SyllabusItem[]; isEnrolled?: boolean }>(`/api/courses/public/${id}`);
+    const response = await fetchFromApi<{ _id?: string; id?: string; code?: string; name?: string; description?: string; tags?: string[]; status?: 'active' | 'archived'; visibility?: 'public' | 'private'; requireApproval?: boolean; image?: string; createdAt?: string; updatedAt?: string; credits?: number; instructor?: string; schedule?: string; room?: string; enrolled?: number; capacity?: number; syllabus?: SyllabusItem[]; isEnrolled?: boolean; startDate?: string; endDate?: string; isExpired?: boolean }>(`/api/courses/public/${id}`);
     const c = response;
 
     return {
@@ -90,6 +95,9 @@ export async function getPublicCourseById(id: string): Promise<Course | null> {
       capacity: c.capacity,
       syllabus: c.syllabus,
       isEnrolled: Boolean(c.isEnrolled || (c.tags || []).includes('enrolled')),
+      startDate: c.startDate,
+      endDate: c.endDate,
+      isExpired: c.isExpired ?? (c.endDate ? new Date(c.endDate) < new Date() : false),
     };
   } catch (err) {
     console.warn('[getPublicCourseById] fetch failed', err);

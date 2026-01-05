@@ -1,6 +1,6 @@
 import React from 'react';
 import { cookies } from 'next/headers';
-import { Clock, Download, MapPin, Users } from 'lucide-react';
+import { Clock, Download, MapPin, Users, CalendarX, CalendarClock } from 'lucide-react';
 import Link from 'next/link';
 import { getMessages } from '@/app/i18n';
 import { createTranslator } from '@/lib/shared/utils/translator';
@@ -31,6 +31,86 @@ export default async function ClassroomPage({ params }: PageProps) {
   const token = cookieStore.get('edu.lms.accessToken')?.value || null;
   
   const classroom = await getClassroom(id, { token });
+
+  // Check if course is expired or not started
+  const isCourseExpired = classroom?.course.isExpired || 
+    (classroom?.course.endDate && new Date(classroom.course.endDate) < new Date());
+  const isCourseNotStarted = classroom?.course.isNotStarted ||
+    (classroom?.course.startDate && new Date(classroom.course.startDate) > new Date());
+
+  // Format date for display
+  const formatCourseDate = (dateStr?: string) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // If course is expired or not started, show blocked message
+  if (isCourseExpired || isCourseNotStarted) {
+    const courseCode = classroom?.course.code || id;
+    const courseName = classroom?.course.name || t('classroom.courseName', 'Lớp học');
+    
+    return (
+      <div className="min-h-screen bg-gray-50" data-locale={locale}>
+        <div className="max-w-2xl mx-auto px-6 py-16">
+          <Link href={ROUTES.HOME} className="text-sm text-gray-500 hover:underline flex items-center gap-2 mb-8">
+            ← {t('nav.home', 'Trang chủ')}
+          </Link>
+
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm text-center">
+            {isCourseExpired ? (
+              <>
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CalendarX className="w-8 h-8 text-red-600" />
+                </div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('classroom.courseExpired', 'Khóa học đã kết thúc')}</h1>
+                <p className="text-gray-600 mb-4">
+                  {t('classroom.courseExpiredDesc', 'Thời gian học của khóa học này đã kết thúc. Bạn không thể truy cập nội dung khóa học.')}
+                </p>
+                <div className="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded-full inline-block mb-2">{courseCode}</div>
+                <p className="font-semibold text-gray-900">{courseName}</p>
+                {classroom?.course.endDate && (
+                  <p className="text-sm text-red-600 mt-2">
+                    {t('classroom.endedOn', 'Kết thúc vào')}: {formatCourseDate(classroom.course.endDate)}
+                  </p>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CalendarClock className="w-8 h-8 text-amber-600" />
+                </div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('classroom.courseNotStarted', 'Khóa học chưa bắt đầu')}</h1>
+                <p className="text-gray-600 mb-4">
+                  {t('classroom.courseNotStartedDesc', 'Khóa học này chưa bắt đầu. Vui lòng quay lại khi đến thời gian học.')}
+                </p>
+                <div className="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded-full inline-block mb-2">{courseCode}</div>
+                <p className="font-semibold text-gray-900">{courseName}</p>
+                {classroom?.course.startDate && (
+                  <p className="text-sm text-amber-600 mt-2">
+                    {t('classroom.startsOn', 'Bắt đầu vào')}: {formatCourseDate(classroom.course.startDate)}
+                  </p>
+                )}
+              </>
+            )}
+
+            <Link 
+              href={ROUTES.HOME}
+              className="mt-6 inline-block bg-black text-white rounded-lg px-6 py-2 text-sm font-semibold hover:bg-gray-800 transition"
+            >
+              {t('nav.backToHome', 'Quay về trang chủ')}
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const lessons = classroom?.lessons || [];
   const resources = classroom?.resources || [];

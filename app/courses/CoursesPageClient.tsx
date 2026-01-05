@@ -30,6 +30,8 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
     invitationCode: '',
     visibility: 'public' as 'public' | 'private',
     requireApproval: false,
+    startDate: '',
+    endDate: '',
   });
 
   const { t } = useT();
@@ -274,6 +276,28 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
             />
           </div>
 
+          <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+            <div className="grid gap-1">
+              <label className="text-sm font-medium text-slate-700">{t('createCourse.startDateLabel') ?? 'Ngày bắt đầu'}</label>
+              <input
+                type="datetime-local"
+                className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none"
+                value={createForm.startDate}
+                onChange={(e) => setCreateForm((p) => ({ ...p, startDate: e.target.value }))}
+              />
+            </div>
+            <div className="grid gap-1">
+              <label className="text-sm font-medium text-slate-700">{t('createCourse.endDateLabel') ?? 'Ngày kết thúc'}</label>
+              <input
+                type="datetime-local"
+                className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none"
+                value={createForm.endDate}
+                onChange={(e) => setCreateForm((p) => ({ ...p, endDate: e.target.value }))}
+                min={createForm.startDate}
+              />
+            </div>
+          </div>
+
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-slate-700">{t('createCourse.syllabus.heading')}</span>
@@ -424,6 +448,8 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
                   visibility: createForm.visibility,
                   requireApproval: createForm.visibility === 'public' ? createForm.requireApproval : false,
                   invitationCode: createForm.invitationCode.trim() || undefined,
+                  startDate: createForm.startDate ? new Date(createForm.startDate).toISOString() : undefined,
+                  endDate: createForm.endDate ? new Date(createForm.endDate).toISOString() : undefined,
                 };
                 const accessToken = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) : null;
                 await fetchFromApi('/api/courses', {
@@ -449,6 +475,8 @@ export default function CoursesPageClient({ initialCourses }: { initialCourses: 
                   invitationCode: '',
                   visibility: 'public',
                   requireApproval: false,
+                  startDate: '',
+                  endDate: '',
                 });
                 setSyllabus([{ title: '', description: '' }]);
                 setImageUploadError(null);

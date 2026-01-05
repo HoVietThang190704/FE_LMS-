@@ -169,6 +169,8 @@ export async function getQuizzesByCourse(courseId: string): Promise<QuizExercise
       shuffleQuestions: q.shuffleQuestions as boolean,
       shuffleOptions: q.shuffleOptions as boolean,
       showResultsImmediately: q.showResultsImmediately as boolean,
+      startDate: q.startDate as string | undefined,
+      endDate: q.endDate as string | undefined,
       createdAt: q.createdAt as string | undefined,
       updatedAt: q.updatedAt as string | undefined
     }));
@@ -304,6 +306,8 @@ export async function getPracticesByCourse(courseId: string): Promise<PracticeEx
       sampleOutput: p.sampleOutput as string | undefined,
       timeLimit: p.timeLimit as number,
       memoryLimit: p.memoryLimit as number,
+      startDate: p.startDate as string | undefined,
+      endDate: p.endDate as string | undefined,
       createdAt: p.createdAt as string | undefined,
       updatedAt: p.updatedAt as string | undefined
     }));

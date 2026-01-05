@@ -29,6 +29,8 @@ export default function CreateQuizPage() {
   const [shuffleQuestions, setShuffleQuestions] = useState(false);
   const [shuffleOptions, setShuffleOptions] = useState(false);
   const [showResultsImmediately, setShowResultsImmediately] = useState(true);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   
   const [questions, setQuestions] = useState<QuizQuestion[]>([
     {
@@ -155,7 +157,9 @@ export default function CreateQuizPage() {
         maxAttempts,
         shuffleQuestions,
         shuffleOptions,
-        showResultsImmediately
+        showResultsImmediately,
+        startDate: startDate ? new Date(startDate).toISOString() : undefined,
+        endDate: endDate ? new Date(endDate).toISOString() : undefined
       });
       router.push(`/my-profile/courses/${courseId}/exercises`);
     } catch (err) {
@@ -267,6 +271,31 @@ export default function CreateQuizPage() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder={messages.exercises?.unlimited || 'Không giới hạn'}
                   disabled={!allowRetake}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {messages.exercises?.startDate || 'Ngày bắt đầu'}
+                </label>
+                <input
+                  type="datetime-local"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {messages.exercises?.endDate || 'Ngày kết thúc'}
+                </label>
+                <input
+                  type="datetime-local"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  min={startDate}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>

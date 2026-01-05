@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, MapPin, Users } from 'lucide-react';
+import { Calendar, MapPin, Users, CalendarX, CalendarClock } from 'lucide-react';
 import type { Course } from '@/lib/api/courses';
 import { createTranslator } from '@/lib/shared/utils/translator';
 import { ROUTES } from '@/lib/shared/constants/routeres';
@@ -17,10 +17,24 @@ export default function CourseCard({ course, enrolled = false, messages = {}, lo
   const t = createTranslator(messages || {});
   const credits = course.credits ?? 3;
   const instructor = course.instructor ?? t('courseCard.noInstructor','Chưa cập nhật');
-  const schedule = course.schedule ?? '';
   const room = course.room ?? '';
   const enrolledCount = course.enrolled ?? 0;
   const capacity = course.capacity ?? 60;
+
+
+  const now = new Date();
+  const isExpired = course.isExpired || (course.endDate && new Date(course.endDate) < now);
+  const isNotStarted = !isExpired && course.startDate && new Date(course.startDate) > now;
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
 
   const rawImage = course.image?.trim();
   const imageSrc = rawImage
@@ -43,6 +57,20 @@ export default function CourseCard({ course, enrolled = false, messages = {}, lo
           <span className={`absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-3xl ${enrolled ? 'bg-amber-900 text-white' : 'bg-white text-gray-700'}`}>
             {enrolled ? t('courseCard.registered','Đã đăng ký') : t('courseCard.available','Có thể đăng ký')}
           </span>
+
+          {isExpired && (
+            <span className="absolute top-3 left-28 text-xs font-semibold px-2 py-1 rounded-3xl bg-red-600 text-white flex items-center gap-1">
+              <CalendarX size={12} />
+              {t('courseCard.expired','Đã kết thúc')}
+            </span>
+          )}
+
+          {isNotStarted && (
+            <span className="absolute top-3 left-28 text-xs font-semibold px-2 py-1 rounded-3xl bg-amber-500 text-white flex items-center gap-1">
+              <CalendarClock size={12} />
+              {t('courseCard.notStarted','Chưa bắt đầu')}
+            </span>
+          )}
 
           <div className="absolute top-3 right-3 text-sm text-white bg-black bg-opacity-50 rounded-3xl px-2 py-1">
             {credits} {t('courseCard.creditsShort','tc')}
@@ -71,12 +99,33 @@ export default function CourseCard({ course, enrolled = false, messages = {}, lo
                 <Users size={16} />
               <span>{enrolledCount}/{capacity} {t('courseCard.students','sinh viên')}</span>
               </div>
+
+              {(course.startDate || course.endDate) && (
+                <div className="flex items-center gap-2 mt-1">
+                  <Calendar size={16} />
+                  <span className="text-xs">
+                    {course.startDate && formatDate(course.startDate)}
+                    {course.startDate && course.endDate && ' - '}
+                    {course.endDate && formatDate(course.endDate)}
+                  </span>
+                </div>
+              )}
             </div>
 
           <div className="mt-4">
-            <div className="block text-center bg-black text-white rounded-md py-2">
-              {t('courseCard.enter','Vào lớp học')}
-            </div>
+            {isExpired ? (
+              <div className="block text-center bg-gray-400 text-white rounded-md py-2 cursor-not-allowed">
+                {t('courseCard.courseEnded','Khóa học đã kết thúc')}
+              </div>
+            ) : isNotStarted ? (
+              <div className="block text-center bg-amber-500 text-white rounded-md py-2">
+                {t('courseCard.startsOn','Bắt đầu')}: {formatDate(course.startDate)}
+              </div>
+            ) : (
+              <div className="block text-center bg-black text-white rounded-md py-2">
+                {t('courseCard.enter','Vào lớp học')}
+              </div>
+            )}
           </div>
         </div>
       </article>

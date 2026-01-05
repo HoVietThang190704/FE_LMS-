@@ -31,6 +31,9 @@ export async function getPublicCourses({ page = 1, limit = 50, keyword = '' } = 
       enrolled: v['enrolled'] as number | undefined,
       capacity: v['capacity'] as number | undefined,
       image: v['image'] as string | undefined,
+      startDate: v['startDate'] as string | undefined,
+      endDate: v['endDate'] as string | undefined,
+      isExpired: (v['isExpired'] as boolean) ?? (v['endDate'] ? new Date(v['endDate'] as string) < new Date() : false),
     } as Course;
   });
 
