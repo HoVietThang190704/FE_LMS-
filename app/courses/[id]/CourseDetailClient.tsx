@@ -107,6 +107,22 @@ export default function CourseDetailClient({ course, messages, locale }: CourseD
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight">{course.name}</h1>
                 {course.description && <p className="text-gray-200 mt-2 hidden md:block">{course.description}</p>}
+
+                <div className="mt-3 flex items-center gap-3 text-sm text-gray-200">
+                  <Calendar className="w-4 h-4" />
+                  {course.startDate || course.endDate ? (
+                    <div>
+                      {course.startDate ? (
+                        <div>{t('courseDetail.startsOn','Starts')}: {new Date(course.startDate).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                      ) : null}
+                      {course.endDate ? (
+                        <div>{t('courseDetail.endsOn','Ends')}: {new Date(course.endDate).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <div className="text-sm text-gray-300">{t('courseDetail.noDates','No start/end date set')}</div>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center gap-3">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Clock, CheckCircle, AlertCircle, PlayCircle } from 'lucide-react';
+import { Clock, CheckCircle, AlertCircle, PlayCircle, CalendarX, CalendarClock } from 'lucide-react';
 import { getQuizzesByCourse, getMyQuizSubmissions } from '@/lib/services/profile/profile.service';
 import type { QuizExercise, QuizSubmission } from '@/lib/types/profile';
 import { createTranslator } from '@/lib/shared/utils/translator';
@@ -10,6 +10,27 @@ import { createTranslator } from '@/lib/shared/utils/translator';
 interface QuizExercisesPanelProps {
   courseId: string;
   messages?: Record<string, unknown>;
+}
+
+function isExerciseExpired(endDate?: string): boolean {
+  if (!endDate) return false;
+  return new Date(endDate) < new Date();
+}
+
+function isExerciseNotStarted(startDate?: string): boolean {
+  if (!startDate) return false;
+  return new Date(startDate) > new Date();
+}
+
+function formatDateTime(dateString?: string): string {
+  if (!dateString) return '';
+  return new Date(dateString).toLocaleString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 }
 
 export default function QuizExercisesPanel({
@@ -82,11 +103,17 @@ export default function QuizExercisesPanel({
       {quizzes.map((quiz) => {
         const status = getQuizStatus(quiz.id);
         const bestScore = getBestScore(quiz.id);
+        const expired = isExerciseExpired(quiz.endDate);
+        const notStarted = isExerciseNotStarted(quiz.startDate);
 
         return (
           <div
             key={quiz.id}
-            className="border border-gray-200 rounded-lg p-4 bg-white hover:border-purple-300 hover:shadow-sm transition-all"
+            className={`border rounded-lg p-4 bg-white transition-all ${
+              expired ? 'border-gray-300 bg-gray-50 opacity-75' : 
+              notStarted ? 'border-yellow-200 bg-yellow-50' :
+              'border-gray-200 hover:border-purple-300 hover:shadow-sm'
+            }`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
@@ -95,10 +122,22 @@ export default function QuizExercisesPanel({
                     #{quiz.order}
                   </span>
                   <h4 className="font-semibold text-gray-900">{quiz.title}</h4>
-                  {status === 'passed' && (
+                  {expired && (
+                    <span className="flex items-center gap-1 text-xs font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded">
+                      <CalendarX size={12} />
+                      Đã hết hạn
+                    </span>
+                  )}
+                  {notStarted && (
+                    <span className="flex items-center gap-1 text-xs font-medium text-yellow-700 bg-yellow-100 px-2 py-0.5 rounded">
+                      <CalendarClock size={12} />
+                      Chưa bắt đầu
+                    </span>
+                  )}
+                  {!expired && !notStarted && status === 'passed' && (
                     <CheckCircle size={16} className="text-green-600" />
                   )}
-                  {status === 'attempted' && (
+                  {!expired && !notStarted && status === 'attempted' && (
                     <AlertCircle size={16} className="text-yellow-600" />
                   )}
                 </div>
@@ -107,7 +146,7 @@ export default function QuizExercisesPanel({
                     {quiz.description}
                   </p>
                 )}
-                <div className="flex items-center gap-3 text-xs text-gray-500">
+                <div className="flex items-center gap-3 text-xs text-gray-500 flex-wrap">
                   <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
                     {quiz.questions.length} câu hỏi
                   </span>
@@ -123,15 +162,37 @@ export default function QuizExercisesPanel({
                       Điểm cao nhất: {bestScore.toFixed(0)}%
                     </span>
                   )}
+                  {quiz.endDate && !expired && (
+                    <span className="flex items-center gap-1 text-orange-600">
+                      <Clock size={12} />
+                      Hết hạn: {formatDateTime(quiz.endDate)}
+                    </span>
+                  )}
+                  {quiz.startDate && notStarted && (
+                    <span className="flex items-center gap-1 text-yellow-700">
+                      <CalendarClock size={12} />
+                      Bắt đầu: {formatDateTime(quiz.startDate)}
+                    </span>
+                  )}
                 </div>
               </div>
-              <Link
-                href={`/my-profile/courses/${courseId}/learn/quiz/${quiz.id}`}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium text-sm flex-shrink-0 flex items-center gap-2"
-              >
-                <PlayCircle size={16} />
-                {status === 'not-started' ? 'Làm bài' : 'Làm lại'}
-              </Link>
+              {expired ? (
+                <span className="px-4 py-2 bg-gray-300 text-gray-600 rounded-lg font-medium text-sm flex-shrink-0 cursor-not-allowed">
+                  Đã hết hạn
+                </span>
+              ) : notStarted ? (
+                <span className="px-4 py-2 bg-yellow-200 text-yellow-700 rounded-lg font-medium text-sm flex-shrink-0 cursor-not-allowed">
+                  Chưa mở
+                </span>
+              ) : (
+                <Link
+                  href={`/my-profile/courses/${courseId}/learn/quiz/${quiz.id}`}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium text-sm flex-shrink-0 flex items-center gap-2"
+                >
+                  <PlayCircle size={16} />
+                  {status === 'not-started' ? 'Làm bài' : 'Làm lại'}
+                </Link>
+              )}
             </div>
           </div>
         );

@@ -32,6 +32,10 @@ export type ClassroomCourseMeta = {
   room?: string;
   credits?: number;
   totalLessons?: number;
+  startDate?: string;
+  endDate?: string;
+  isExpired?: boolean;
+  isNotStarted?: boolean;
 };
 
 export type ExerciseProgressDetail = {
