@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { BookOpen, Home, Award, BarChart3 } from 'lucide-react';
 import UserDropdown from '@/components/header/UserDropdown';
@@ -10,13 +10,24 @@ import Link from 'next/link';
 import { IMAGES } from '@/lib/shared/constants/images';
 import { LOGO_SIZE, ICON_L } from '@/lib/shared/constants/size';
 import { useCurrentUser } from '@/app/hooks/useCurrentUser';
+import { useT, detectBrowserLocale } from '@/lib/shared/i18n';
 
 export default function Navbar() {
+  const [locale, setLocale] = useState(detectBrowserLocale());
+
+  useEffect(() => {
+    const handler = () => setLocale(detectBrowserLocale());
+    window.addEventListener('lms:locale-change', handler);
+    return () => window.removeEventListener('lms:locale-change', handler);
+  }, []);
+
+  const { t } = useT(locale);
+
   const navItems = [
-    { label: 'Trang chủ', icon: Home, href: '/' },
-    { label: 'Khóa học', icon: BookOpen, href: '/courses' },
-    { label: 'Bảng điểm', icon: Award, href: '/grades' },
-    { label: 'Báo cáo', icon: BarChart3, href: '/reports' },
+    { labelKey: 'nav.home', icon: Home, href: '/' },
+    { labelKey: 'nav.courses', icon: BookOpen, href: '/courses' },
+    { labelKey: 'nav.grades', icon: Award, href: '/grades' },
+    { labelKey: 'nav.reports', icon: BarChart3, href: '/reports' },
   ];
 
   const pathname = usePathname();
@@ -55,7 +66,7 @@ export default function Navbar() {
                   }`}
                 >
                   <item.icon size={ICON_L.WIDTH} />
-                  {item.label}
+                  {t(item.labelKey)}
                 </Link>
               );
             })}

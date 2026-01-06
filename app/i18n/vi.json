@@ -118,6 +118,7 @@
     "notifications": "Thông báo",
     "changePassword": "Đổi mật khẩu",
     "support": "Trợ giúp & Hỗ trợ",
+    "language": "Tiếng Việt",
     "logout": "Đăng xuất",
     "guest": "Khách",
     "userFallback": "Người dùng"
@@ -134,6 +135,22 @@
   },
   "courses": {
     "searchPlaceholder": "Tìm kiếm môn học, mã môn, giảng viên..."
+  },
+  "search": {
+    "title": "Tìm kiếm khóa học",
+    "searchPlaceholder": "Tìm kiếm môn học, mã môn, giảng viên...",
+    "searchButton": "Tìm kiếm",
+    "resultsFound": "Tìm thấy {count} kết quả cho \"{query}\"",
+    "poweredBy": "Được hỗ trợ bởi Elasticsearch",
+    "loading": "Đang tìm kiếm...",
+    "noResultsTitle": "Không tìm thấy kết quả",
+    "noResults": "Không tìm thấy kết quả cho \"{query}\"",
+    "noResultsDesc": "Không có khóa học nào phù hợp với \"{query}\". Hãy thử từ khóa khác hoặc kiểm tra lại chính tả.",
+    "promptTitle": "Tìm kiếm khóa học",
+    "promptDesc": "Nhập tên khóa học, mã môn hoặc tên giảng viên để bắt đầu tìm kiếm.",
+    "viewAll": "Xem tất cả kết quả",
+    "prev": "Trước",
+    "next": "Tiếp"
   },
   "joinByInvite": {
     "buttonLabel": "Tham gia bằng mã mời",

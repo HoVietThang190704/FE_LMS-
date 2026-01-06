@@ -4,12 +4,13 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { User, Settings, Bell, Key, HelpCircle, LogOut, ChevronDown } from 'lucide-react';
+import { User, Settings, Bell, Key, HelpCircle, LogOut, ChevronDown, Globe } from 'lucide-react';
 import Dropdown from '@/components/ui/Dropdown';
 import { ROUTES } from '@/lib/shared/constants/routeres';
 import { AVATAR } from '@/lib/shared/constants/size';
 import { STORAGE_KEYS, AUTH_SESSION_EVENT } from '@/lib/shared/constants/storage';
-import { getMessages, DEFAULT_LOCALE } from '@/app/i18n';
+import { getMessages } from '@/app/i18n';
+import { detectBrowserLocale, LOCALE_STORAGE_KEY } from '@/lib/shared/i18n';
 
 type Props = {
   name?: string;
@@ -19,7 +20,8 @@ type Props = {
 
 export default function UserDropdown({ name, avatarUrl, isAuthenticated = false }: Props) {
   const router = useRouter();
-  const messages = getMessages(DEFAULT_LOCALE) as Record<string, unknown>;
+  const locale = detectBrowserLocale();
+  const messages = getMessages(locale) as Record<string, unknown>;
   const userMenu = (messages.userMenu ?? {}) as Record<string, string | undefined>;
 
   const displayName = name?.trim()
@@ -38,6 +40,16 @@ export default function UserDropdown({ name, avatarUrl, isAuthenticated = false 
       window.dispatchEvent(new Event(AUTH_SESSION_EVENT));
     }
     router.push(ROUTES.LOGIN);
+  };
+
+  const handleToggleLanguage = () => {
+    if (typeof window === 'undefined') return;
+    const current = detectBrowserLocale();
+    const next = current === 'vi' ? 'en' : 'vi';
+    localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    // Notify other client components in the same tab
+    window.dispatchEvent(new Event('lms:locale-change'));
+    router.refresh();
   };
 
   const trigger = (open: boolean) => (
@@ -104,6 +116,15 @@ export default function UserDropdown({ name, avatarUrl, isAuthenticated = false 
         <HelpCircle size={16} className="text-gray-500" />
         {userMenu.support || 'Trợ giúp'}
       </Link>
+
+      <button
+        onClick={handleToggleLanguage}
+        className="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+        role="menuitem"
+      >
+        <Globe size={16} className="text-gray-500" />
+        {locale === 'vi' ? 'Tiếng Việt' : 'English'}
+      </button>
 
       <div className="border-t border-gray-100 my-1" />
 

@@ -1,8 +1,18 @@
 import { useMemo } from 'react';
 import { getMessages, DEFAULT_LOCALE, type SupportedLocale } from '@/app/i18n';
 
+export const LOCALE_STORAGE_KEY = 'lms:locale';
+
 export function detectBrowserLocale(): SupportedLocale {
-  if (typeof navigator === 'undefined') return DEFAULT_LOCALE;
+  if (typeof navigator === 'undefined' || typeof window === 'undefined') return DEFAULT_LOCALE;
+
+  const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+  if (stored) {
+    const s = stored.toLowerCase();
+    if (s.startsWith('en')) return 'en';
+    if (s.startsWith('vi')) return 'vi';
+  }
+
   const lang = navigator.language || navigator.languages?.[0] || DEFAULT_LOCALE;
   if (lang.startsWith('en')) return 'en';
   if (lang.startsWith('vi')) return 'vi';

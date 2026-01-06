@@ -118,6 +118,7 @@
     "notifications": "Notifications",
     "changePassword": "Change password",
     "support": "Help & Support",
+    "language": "English",
     "logout": "Sign out",
     "guest": "Guest",
     "userFallback": "User"
@@ -134,6 +135,22 @@
   },
   "courses": {
     "searchPlaceholder": "Search courses, code, instructor..."
+  },
+  "search": {
+    "title": "Search courses",
+    "searchPlaceholder": "Search courses, code or instructor...",
+    "searchButton": "Search",
+    "resultsFound": "Found {count} results for \"{query}\"",
+    "poweredBy": "Powered by Elasticsearch",
+    "loading": "Searching...",
+    "noResultsTitle": "No results found",
+    "noResults": "No results found for \"{query}\"",
+    "noResultsDesc": "No courses matched \"{query}\". Try different keywords or check spelling.",
+    "promptTitle": "Search courses",
+    "promptDesc": "Enter course name, code or instructor to start searching.",
+    "viewAll": "View all results",
+    "prev": "Prev",
+    "next": "Next"
   },
   "joinByInvite": {
     "buttonLabel": "Join by invitation code",

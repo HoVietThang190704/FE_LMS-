@@ -5,6 +5,7 @@ import { Search, X, BookOpen, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { searchCourses, CourseSearchResult } from '@/lib/api/search';
+import { useT, detectBrowserLocale } from '@/lib/shared/i18n';
 
 interface HeaderSearchBarProps {
   placeholder?: string;
@@ -12,9 +13,14 @@ interface HeaderSearchBarProps {
 }
 
 export default function HeaderSearchBar({
-  placeholder = 'Tìm kiếm khóa học...',
+  placeholder,
   className = '',
 }: HeaderSearchBarProps) {
+  const [locale, setLocale] = useState(detectBrowserLocale());
+  const { t } = useT(locale);
+
+  const resolvedPlaceholder = placeholder ?? t('search.searchPlaceholder');
+
   const [searchValue, setSearchValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -89,7 +95,14 @@ export default function HeaderSearchBar({
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    const localeHandler = () => setLocale(detectBrowserLocale());
+    window.addEventListener('lms:locale-change', localeHandler);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('lms:locale-change', localeHandler);
+    };
   }, []);
 
   useEffect(() => {
@@ -108,13 +121,11 @@ export default function HeaderSearchBar({
         }`}
       >
         {isLoading ? (
-          <Loader2 size={18} className="flex-shrink-0 text-blue-500 animate-spin" />
+          <Loader2 size={18} className="shrink-0 text-blue-500 animate-spin" />
         ) : (
           <Search
             size={18}
-            className={`flex-shrink-0 transition-colors ${
-              isFocused ? 'text-blue-500' : 'text-gray-400'
-            }`}
+            className={`shrink-0 transition-colors ${isFocused ? 'text-blue-500' : 'text-gray-400'}`}
           />
         )}
 
@@ -128,7 +139,7 @@ export default function HeaderSearchBar({
           }}
           onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           className="w-48 lg:w-64 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-sm"
         />
 
@@ -137,7 +148,7 @@ export default function HeaderSearchBar({
             onClick={handleClear}
             type="button"
             aria-label="Clear search"
-            className="flex-shrink-0 p-1 rounded-full transition-all duration-200 hover:bg-gray-200"
+            className="shrink-0 p-1 rounded-full transition-all duration-200 hover:bg-gray-200"
           >
             <X size={16} className="text-gray-500 hover:text-gray-700" />
           </button>
@@ -149,7 +160,7 @@ export default function HeaderSearchBar({
           {results.length > 0 ? (
             <>
               <div className="px-3 py-2 bg-gray-50 border-b border-gray-100">
-                <span className="text-xs text-gray-500">Kết quả tìm kiếm</span>
+                <span className="text-xs text-gray-500">{t('search.resultsFound')}</span>
               </div>
               {results.map((course) => (
                 <Link
@@ -158,7 +169,7 @@ export default function HeaderSearchBar({
                   onClick={handleResultClick}
                   className="flex items-start gap-3 px-3 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                     {course.image ? (
                       <img
                         src={course.image}
@@ -185,13 +196,13 @@ export default function HeaderSearchBar({
                 onClick={handleResultClick}
                 className="block px-3 py-2 text-center text-sm text-blue-600 hover:bg-blue-50 transition-colors border-t border-gray-100"
               >
-                Xem tất cả kết quả
+                {t('search.viewAll')}
               </Link>
             </>
           ) : (
             <div className="px-4 py-6 text-center">
               <p className="text-sm text-gray-500">
-                Không tìm thấy kết quả cho &quot;{searchValue}&quot;
+                {t('search.noResults').replace('{query}', searchValue)}
               </p>
             </div>
           )}

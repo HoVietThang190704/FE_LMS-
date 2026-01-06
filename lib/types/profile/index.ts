@@ -100,13 +100,6 @@ export interface PracticeExercise {
   courseCode?: string;
   title: string;
   description: string;
-export interface PracticeExercise {
-  id: string;
-  courseId: string;
-  courseName?: string;
-  courseCode?: string;
-  title: string;
-  description: string;
   order: number;
   difficulty: 'easy' | 'medium' | 'hard';
   language: string;
