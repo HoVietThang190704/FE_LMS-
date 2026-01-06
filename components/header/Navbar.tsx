@@ -56,7 +56,7 @@ export default function Navbar() {
               const isActive = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href || '');
               return (
                 <Link
-                  key={item.label}
+                  key={item.labelKey}
                   href={item.href}
                   aria-current={isActive ? 'page' : undefined}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
